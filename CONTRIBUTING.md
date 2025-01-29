@@ -81,9 +81,9 @@ Thank you for taking the time to contribute! Your support is greatly appreciated
 (Español)
 --------------------------
 
-# Contribuyendo a [Nombre de Tu Proyecto]
+# Contribuyendo a SiK HELL
 
-¡Gracias por tu interés en contribuir a [Nombre de Tu Proyecto]! Tus esfuerzos ayudan a mejorar este proyecto para todos. A continuación, encontrarás algunas pautas para ayudarte a comenzar.
+¡Gracias por tu interés en contribuir a SiK HELL! Tus esfuerzos ayudan a mejorar este proyecto para todos. A continuación, encontrarás algunas pautas para ayudarte a comenzar.
 
 ## Tabla de Contenidos
 
