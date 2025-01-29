@@ -1,0 +1,125 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxbr21gu5dd50"]
+
+[ext_resource type="Script" path="res://scripts/menus/selsave.gd" id="1_7cigo"]
+
+[node name="selsave" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7cigo")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="titulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 193.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 141
+text = "SiK HELL"
+horizontal_alignment = 1
+
+[node name="botones2" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 597.0
+offset_top = 813.0
+offset_right = 1361.0
+offset_bottom = 890.0
+theme_override_constants/separation = 30
+
+[node name="atras" type="Button" parent="botones2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Atras"
+
+[node name="borrar" type="Button" parent="botones2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Borrar"
+
+[node name="aceptar" type="Button" parent="botones2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Aceptar"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 167.0
+offset_top = 348.0
+offset_right = 1786.0
+offset_bottom = 506.0
+theme_override_constants/separation = 45
+
+[node name="info" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="savegame1" type="Label" parent="VBoxContainer/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+
+[node name="savegame2" type="Label" parent="VBoxContainer/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+
+[node name="savegame3" type="Label" parent="VBoxContainer/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+
+[node name="botones" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="savegame1" type="Button" parent="VBoxContainer/botones"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Savegame 1"
+
+[node name="savegame2" type="Button" parent="VBoxContainer/botones"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Savegame 2"
+
+[node name="savegame3" type="Button" parent="VBoxContainer/botones"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Savegame 3"
+
+[connection signal="pressed" from="botones2/atras" to="." method="_on_atras_pressed"]
+[connection signal="pressed" from="botones2/borrar" to="." method="_on_borrar_pressed"]
+[connection signal="pressed" from="botones2/aceptar" to="." method="_on_aceptar_pressed"]
+[connection signal="pressed" from="VBoxContainer/botones/savegame1" to="." method="_on_savegame1_pressed"]
+[connection signal="pressed" from="VBoxContainer/botones/savegame2" to="." method="_on_savegame2_pressed"]
+[connection signal="pressed" from="VBoxContainer/botones/savegame3" to="." method="_on_savegame3_pressed"]

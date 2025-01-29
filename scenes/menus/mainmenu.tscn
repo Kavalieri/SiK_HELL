@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://4aic0b4ub2le"]
+
+[ext_resource type="Script" path="res://scripts/menus/mainmenu.gd" id="1_blsth"]
+
+[node name="mainmenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_blsth")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="titulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 193.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 141
+text = "SiK HELL"
+horizontal_alignment = 1
+
+[node name="botones" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 290.0
+offset_top = -121.0
+offset_right = -290.0
+offset_bottom = 122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="cargar" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Cargar"
+
+[node name="opciones" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Opciones"
+
+[node name="salir" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Salir"
+
+[connection signal="pressed" from="botones/cargar" to="." method="_on_cargar_pressed"]
+[connection signal="pressed" from="botones/opciones" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="botones/salir" to="." method="_on_salir_pressed"]

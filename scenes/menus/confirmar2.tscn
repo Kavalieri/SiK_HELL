@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://f14cuabv0h8n"]
+
+[ext_resource type="Script" path="res://scripts/menus/confirmar2.gd" id="1_drftp"]
+
+[node name="confirmar" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_drftp")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.489622, 0.489622, 0.489622, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="titulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 193.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 141
+text = "Estas seguro?"
+horizontal_alignment = 1
+
+[node name="botones" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 290.0
+offset_top = -121.0
+offset_right = -290.0
+offset_bottom = 122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="si" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "SI"
+
+[node name="no" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "NO"
+
+[connection signal="pressed" from="botones/si" to="." method="_on_si_pressed"]
+[connection signal="pressed" from="botones/no" to="." method="_on_no_pressed"]

@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://dk62lqdhj4lg7"]
+
+[ext_resource type="Script" path="res://scripts/menus/pause.gd" id="1_akghi"]
+[ext_resource type="PackedScene" uid="uid://7xjtviyrffop" path="res://scenes/menus/options.tscn" id="2_dqoj2"]
+[ext_resource type="PackedScene" uid="uid://f14cuabv0h8n" path="res://scenes/menus/confirmar2.tscn" id="3_2iar3"]
+
+[node name="pause" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_akghi")
+options_scene = ExtResource("2_dqoj2")
+confirm_scene = ExtResource("3_2iar3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.652864, 0.652864, 0.652864, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="titulo" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 193.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 141
+text = "PAUSA"
+horizontal_alignment = 1
+
+[node name="botones" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 290.0
+offset_top = -121.0
+offset_right = -290.0
+offset_bottom = 122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="reanudar" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Reanudar"
+
+[node name="opciones" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Opciones"
+
+[node name="salir" type="Button" parent="botones"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Salir"
+
+[connection signal="pressed" from="botones/reanudar" to="." method="_on_reanudar_pressed"]
+[connection signal="pressed" from="botones/opciones" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="botones/salir" to="." method="_on_salir_pressed"]

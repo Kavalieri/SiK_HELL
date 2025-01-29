@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://yafowvaeynx6"]
+
+[ext_resource type="PackedScene" uid="uid://wc07b0nwksm4" path="res://scenes/enemies/enemy_1.tscn" id="1_c6203"]
+[ext_resource type="PackedScene" uid="uid://chcs2hrpyd0as" path="res://scenes/pj/pj_1.tscn" id="2_ma02f"]
+[ext_resource type="PackedScene" uid="uid://dk62lqdhj4lg7" path="res://scenes/menus/pause.tscn" id="3_wlc8l"]
+
+[node name="test" type="Node2D"]
+
+[node name="enemy_1" parent="." instance=ExtResource("1_c6203")]
+position = Vector2(1608, 203)
+
+[node name="pj_1" parent="." instance=ExtResource("2_ma02f")]
+position = Vector2(185, 219)
+
+[node name="pause" parent="." instance=ExtResource("3_wlc8l")]
+offset_left = 946.0
+offset_top = 513.0
+offset_right = 946.0
+offset_bottom = 513.0

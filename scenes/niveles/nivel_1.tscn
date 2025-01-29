@@ -1,0 +1,93 @@
+[gd_scene load_steps=8 format=3 uid="uid://b30bscuisxi2k"]
+
+[ext_resource type="Script" path="res://scripts/niveles/nivel_1.gd" id="1_51xpq"]
+[ext_resource type="PackedScene" uid="uid://wc07b0nwksm4" path="res://scenes/enemies/enemy_1.tscn" id="2_vwofn"]
+[ext_resource type="PackedScene" uid="uid://dfmfmdy1lt2h8" path="res://scenes/menus/resultado.tscn" id="3_0jnpv"]
+[ext_resource type="Texture2D" uid="uid://be7unmf0bnktw" path="res://assets/fondos/game_background_1.png" id="4_qkn6n"]
+[ext_resource type="PackedScene" uid="uid://dk62lqdhj4lg7" path="res://scenes/menus/pause.tscn" id="4_uu3kv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ko07v"]
+size = Vector2(1920, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8q5fb"]
+size = Vector2(376, 1000)
+
+[node name="nivel_1" type="Area2D"]
+script = ExtResource("1_51xpq")
+enemy_scene = ExtResource("2_vwofn")
+resultado_scene = ExtResource("3_0jnpv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+physics_interpolation_mode = 2
+z_index = -1
+position = Vector2(890, 341)
+scale = Vector2(0.754201, 0.827785)
+texture = ExtResource("4_qkn6n")
+
+[node name="limites" type="CollisionShape2D" parent="."]
+position = Vector2(960, 540)
+shape = SubResource("RectangleShape2D_ko07v")
+
+[node name="enemy_spawn" type="CollisionShape2D" parent="."]
+position = Vector2(1693, 529)
+shape = SubResource("RectangleShape2D_8q5fb")
+
+[node name="pj_1" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG Pj_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:
+energy:"
+
+[node name="enemy_1" type="Label" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 498.0
+offset_right = 348.0
+offset_bottom = 843.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG enemy_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:"
+
+[node name="pause" parent="." instance=ExtResource("4_uu3kv")]
+offset_left = 973.0
+offset_top = 441.0
+offset_right = 973.0
+offset_bottom = 441.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="points" type="Label" parent="CanvasLayer"]
+offset_left = 1647.0
+offset_top = 25.0
+offset_right = 1826.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 40
+text = "Puntos: 0"
+
+[node name="phase" type="Label" parent="CanvasLayer"]
+offset_left = 978.0
+offset_top = 40.0
+offset_right = 1114.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 40
+text = "FASE: 1"
+
+[node name="level" type="Label" parent="CanvasLayer"]
+offset_left = 805.0
+offset_top = 40.0
+offset_right = 947.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 40
+text = "NIVEL: 1"

@@ -1,0 +1,170 @@
+[gd_scene load_steps=2 format=3 uid="uid://dew4da62lnjdr"]
+
+[ext_resource type="Script" path="res://scripts/menus/pregame.gd" id="1_p1byj"]
+
+[node name="pregame" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p1byj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="titulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 193.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 141
+text = "SiK HELL"
+horizontal_alignment = 1
+
+[node name="pjs" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 175.0
+offset_right = 1853.0
+offset_bottom = 993.0
+theme_override_constants/separation = 10
+
+[node name="info" type="HBoxContainer" parent="pjs"]
+layout_mode = 2
+
+[node name="Pj1" type="Label" parent="pjs/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Vida : 100
+Daño: 10
+Defensa: 10
+Celeridad: 3
+Crítico: 5
+Precisión: 10
+Esquiva: 10
+Energía: 100
+Reg. Energía: 1
+Especial: Dash
+"
+horizontal_alignment = 1
+
+[node name="Pj2" type="Label" parent="pjs/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "NO DISPONIBLE
+Vida : 100
+Daño: 10
+Defensa: 10
+Celeridad: 3
+Crítico: 5
+Precisión: 10
+Esquiva: 10
+Energía: 100
+Reg. Energía: 1
+Especial: Dash
+"
+horizontal_alignment = 1
+
+[node name="Pj3" type="Label" parent="pjs/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "NO DISPONIBLE
+Vida : 100
+Daño: 10
+Defensa: 10
+Celeridad: 3
+Crítico: 5
+Precisión: 10
+Esquiva: 10
+Energía: 100
+Reg. Energía: 1
+Especial: Dash
+"
+horizontal_alignment = 1
+
+[node name="pj" type="HBoxContainer" parent="pjs"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Pj1" type="Button" parent="pjs/pj"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Sara"
+
+[node name="Pj2" type="Button" parent="pjs/pj"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Kava"
+
+[node name="Pj3" type="Button" parent="pjs/pj"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Yonki"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="pjs"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="mejoras" type="Button" parent="pjs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 61
+text = "Mejoras"
+
+[node name="ataques" type="Button" parent="pjs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 61
+text = "Ataques"
+
+[node name="botones2" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 669.0
+offset_top = 940.0
+offset_right = 1310.0
+offset_bottom = 1017.0
+theme_override_constants/separation = 50
+
+[node name="atras" type="Button" parent="botones2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Atrás"
+
+[node name="aceptar" type="Button" parent="botones2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Aceptar"
+
+[connection signal="pressed" from="pjs/pj/Pj1" to="." method="_on_pj1_pressed"]
+[connection signal="pressed" from="pjs/pj/Pj2" to="." method="_on_pj2_pressed"]
+[connection signal="pressed" from="pjs/pj/Pj3" to="." method="_on_pj3_pressed"]
+[connection signal="pressed" from="pjs/HBoxContainer/mejoras" to="." method="_on_mejoras_pressed"]
+[connection signal="pressed" from="pjs/HBoxContainer/ataques" to="." method="_on_ataques_pressed"]
+[connection signal="pressed" from="botones2/atras" to="." method="_on_atras_pressed"]
+[connection signal="pressed" from="botones2/aceptar" to="." method="_on_aceptar_pressed"]

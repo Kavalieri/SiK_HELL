@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfmfmdy1lt2h8"]
+
+[ext_resource type="Texture2D" uid="uid://bpcbyn54ylwxy" path="res://assets/objects/Sign.png" id="1_wxvc3"]
+
+[node name="resultado" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CenterContainer"]
+position = Vector2(971, 749)
+scale = Vector2(13.7176, 12.28)
+texture = ExtResource("1_wxvc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="resultado" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 40
+text = "¡VICTORIA!
+Línea 1: 0
+Línea 2: 0
+Línea 3:0
+Esta línea es mucho más larga y mueve los botones"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="reset" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Reset"
+
+[node name="continuar" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Continuar"
+
+[node name="terminar" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Terminar"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/continuar" to="." method="_on_continuar_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/terminar" to="." method="_on_terminar_pressed"]

@@ -1,0 +1,394 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmw3qp4jf46ts"]
+
+[ext_resource type="Script" path="res://scripts/menus/mejoras.gd" id="1_f55p4"]
+
+[node name="mejoras" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f55p4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="menu" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 60.0
+offset_right = 1794.0
+offset_bottom = 1023.0
+theme_override_constants/separation = 120
+
+[node name="points" type="HBoxContainer" parent="menu"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="title" type="Label" parent="menu/points"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Puntos:"
+
+[node name="value" type="Label" parent="menu/points"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+
+[node name="stats" type="VBoxContainer" parent="menu"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="stats" type="GridContainer" parent="menu/stats"]
+layout_mode = 2
+theme_override_constants/h_separation = 135
+theme_override_constants/v_separation = 60
+columns = 4
+
+[node name="health" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="title" type="Label" parent="menu/stats/stats/health"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Salud"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/health"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/health"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/health/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/health/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="damage" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/damage"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Daño"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/damage"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/damage"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/damage/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/damage/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="defense" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/defense"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Defensa"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/defense"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/defense"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/defense/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/defense/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="attspeed" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/attspeed"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Celeridad"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/attspeed"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/attspeed"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/attspeed/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/attspeed/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="luck" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/luck"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Suerte"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/luck"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/luck"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/luck/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/luck/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="crit" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/crit"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Crítico"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/crit"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/crit"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/crit/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/crit/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="precision" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/precision"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Precisión"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/precision"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/precision"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/precision/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/precision/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="dodge" type="VBoxContainer" parent="menu/stats/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="title" type="Label" parent="menu/stats/stats/dodge"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+text = "Esquiva"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="valor" type="Label" parent="menu/stats/stats/dodge"]
+layout_mode = 2
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="modifier" type="HBoxContainer" parent="menu/stats/stats/dodge"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="menos" type="Button" parent="menu/stats/stats/dodge/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "-"
+
+[node name="mas" type="Button" parent="menu/stats/stats/dodge/modifier"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "+"
+
+[node name="reset" type="Button" parent="menu/stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "Reset"
+
+[node name="options" type="HBoxContainer" parent="menu"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="cancelar" type="Button" parent="menu/options"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "Cancelar"
+
+[node name="aceptar" type="Button" parent="menu/options"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "Aceptar"
+
+[connection signal="pressed" from="menu/stats/stats/health/modifier/menos" to="." method="_on_health_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/health/modifier/mas" to="." method="_on_health_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/damage/modifier/menos" to="." method="_on_damage_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/damage/modifier/mas" to="." method="_on_damage_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/defense/modifier/menos" to="." method="_on_defense_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/defense/modifier/mas" to="." method="_on_defense_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/attspeed/modifier/menos" to="." method="_on_attspeed_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/attspeed/modifier/mas" to="." method="_on_attspeed_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/luck/modifier/menos" to="." method="_on_luck_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/luck/modifier/mas" to="." method="_on_luck_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/crit/modifier/menos" to="." method="_on_crit_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/crit/modifier/mas" to="." method="_on_crit_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/precision/modifier/menos" to="." method="_on_precision_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/precision/modifier/mas" to="." method="_on_precision_up_pressed"]
+[connection signal="pressed" from="menu/stats/stats/dodge/modifier/menos" to="." method="_on_dodge_down_pressed"]
+[connection signal="pressed" from="menu/stats/stats/dodge/modifier/mas" to="." method="_on_dodge_up_pressed"]
+[connection signal="pressed" from="menu/stats/reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="menu/options/cancelar" to="." method="_on_cancelar_pressed"]
+[connection signal="pressed" from="menu/options/aceptar" to="." method="_on_aceptar_pressed"]

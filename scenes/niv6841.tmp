@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b30bscuisxi2k"]
+
+[ext_resource type="Script" path="res://scripts/nivel_1.gd" id="1_pxffw"]
+[ext_resource type="PackedScene" uid="uid://wc07b0nwksm4" path="res://scenes/enemy_1.tscn" id="4_q2ejb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ko07v"]
+size = Vector2(1920, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8q5fb"]
+size = Vector2(736, 722)
+
+[node name="nivel_1" type="Area2D"]
+script = ExtResource("1_pxffw")
+enemy_scene = ExtResource("4_q2ejb")
+
+[node name="limites" type="CollisionShape2D" parent="."]
+position = Vector2(960, 540)
+shape = SubResource("RectangleShape2D_ko07v")
+
+[node name="enemy_spawn" type="CollisionShape2D" parent="."]
+position = Vector2(1421, 531)
+shape = SubResource("RectangleShape2D_8q5fb")

@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://b30bscuisxi2k"]
+
+[ext_resource type="Script" path="res://scripts/nivel_1.gd" id="1_sxlvk"]
+[ext_resource type="PackedScene" uid="uid://wc07b0nwksm4" path="res://scenes/enemies/enemy_1.tscn" id="2_ruiau"]
+[ext_resource type="PackedScene" uid="uid://dfmfmdy1lt2h8" path="res://scenes/menus/resultado.tscn" id="3_rbtw2"]
+[ext_resource type="PackedScene" uid="uid://dk62lqdhj4lg7" path="res://scenes/menus/pause.tscn" id="3_w5d1q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ko07v"]
+size = Vector2(1920, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8q5fb"]
+size = Vector2(736, 722)
+
+[node name="nivel_1" type="Area2D"]
+script = ExtResource("1_sxlvk")
+enemy_scene = ExtResource("2_ruiau")
+resultado_scene = ExtResource("3_rbtw2")
+enemy_count = null
+
+[node name="limites" type="CollisionShape2D" parent="."]
+position = Vector2(960, 540)
+shape = SubResource("RectangleShape2D_ko07v")
+
+[node name="enemy_spawn" type="CollisionShape2D" parent="."]
+position = Vector2(1421, 531)
+shape = SubResource("RectangleShape2D_8q5fb")
+
+[node name="pj_1" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG Pj_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:
+energy:"
+
+[node name="enemy_1" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 498.0
+offset_right = 348.0
+offset_bottom = 843.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG enemy_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:"
+
+[node name="pause" parent="." instance=ExtResource("3_w5d1q")]
+offset_left = 973.0
+offset_top = 441.0
+offset_right = 973.0
+offset_bottom = 441.0

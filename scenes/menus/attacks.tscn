@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://cygl1qicb2ibc"]
+
+[ext_resource type="Script" path="res://scripts/menus/attacks.gd" id="1_7prp3"]
+
+[node name="attacks" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7prp3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 673.0
+offset_right = 1725.0
+offset_bottom = 748.0
+
+[node name="info" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="attack1" type="Label" parent="VBoxContainer/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="attack2" type="Label" parent="VBoxContainer/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="attack3" type="Label" parent="VBoxContainer/info"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="botones3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="attack1" type="Button" parent="VBoxContainer/botones3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Ataque 1"
+
+[node name="attack2" type="Button" parent="VBoxContainer/botones3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Ataque 2"
+
+[node name="attack3" type="Button" parent="VBoxContainer/botones3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 45
+text = "Ataque 3"
+
+[node name="options" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 822.0
+offset_top = 838.0
+offset_right = 1097.0
+offset_bottom = 943.0
+
+[node name="aceptar" type="Button" parent="options"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 71
+text = "Aceptar"
+
+[connection signal="pressed" from="VBoxContainer/botones3/attack1" to="." method="_on_attack1_pressed"]
+[connection signal="pressed" from="VBoxContainer/botones3/attack2" to="." method="_on_attack2_pressed"]
+[connection signal="pressed" from="VBoxContainer/botones3/attack3" to="." method="_on_attack3_pressed"]
+[connection signal="pressed" from="options/aceptar" to="." method="_on_aceptar_pressed"]
