@@ -1,5 +1,4 @@
-extends CharacterBody2D
-class_name class_enemy1
+class_name class_enemy_1 extends CharacterBody2D
 
 signal enemy_defeated
 
