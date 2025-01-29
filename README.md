@@ -1,2 +1,5 @@
-# SiK-Hell
-First 2D Videogame with Godot 4.3
+# SiK HEll
+
+Another bullet hell 2D game.
+
+---- First game, jugamos, no juzgamos 
