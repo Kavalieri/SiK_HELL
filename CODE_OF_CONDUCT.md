@@ -1,4 +1,4 @@
-# Code of Conduct
+# Code of Conduct (English)
 
 ## Our Pledge
 
@@ -37,13 +37,9 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be repor
 This Code of Conduct is adapted from the Contributor Covenant, version 1.4:
 https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
 
-
-
----
-(Español)
 ---
 
-# Código de Conducta
+# Código de Conducta (Español)
 
 ## Nuestro Compromiso
 

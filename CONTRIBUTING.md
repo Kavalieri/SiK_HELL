@@ -1,6 +1,6 @@
-# Contributing to SiK HELL
+# Contributing to SiK HELL (English)
 
-Thank you for your interest in contributing to [Your Project Name]! Your efforts help make this project better for everyone. Below are some guidelines to help you get started.
+Thank you for your interest in contributing to SiK HELL! Your efforts help make this project better for everyone. Below are some guidelines to help you get started.
 
 ## Table of Contents
 
@@ -78,10 +78,9 @@ We welcome suggestions for improvements! To suggest an enhancement, please open 
 Thank you for taking the time to contribute! Your support is greatly appreciated.
 
 --------------------------
-(Español)
---------------------------
 
-# Contribuyendo a SiK HELL
+
+# Contribuyendo a SiK HELL (Español)
 
 ¡Gracias por tu interés en contribuir a SiK HELL! Tus esfuerzos ayudan a mejorar este proyecto para todos. A continuación, encontrarás algunas pautas para ayudarte a comenzar.
 
