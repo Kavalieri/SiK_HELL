@@ -1,4 +1,4 @@
-# SiK HEll
+# SiK HELL
 
 Another bullet hell 2D game.
 
