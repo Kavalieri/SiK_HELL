@@ -154,13 +154,23 @@ func _physics_process(delta: float) -> void:
 	_verificar_estado_nivel()
 
 func _restringir_movimiento() -> void:
+	if not player or not limites or not limites.shape:
+		SYSLOG.error_log("No se puede restringir movimiento: Nodo 'limites' o 'player' no válido.", "NIVEL")
+		return
+	
 	if limites.shape is RectangleShape2D:
-		var size = limites.shape.extents * 2
-		var bounds = Rect2(limites.global_position - limites.shape.extents, size)
-		player.global_position = Vector2(
+		var extents = limites.shape.extents
+		var bounds = Rect2(limites.global_position - extents, extents * 2)
+
+		var clamped_position = Vector2(
 			clamp(player.global_position.x, bounds.position.x, bounds.position.x + bounds.size.x),
 			clamp(player.global_position.y, bounds.position.y, bounds.position.y + bounds.size.y)
 		)
+
+		# Solo actualizar la posición si es diferente a la actual
+		if player.global_position != clamped_position:
+			SYSLOG.debug_log("Reubicando al jugador dentro de los límites: %s" % clamped_position, "NIVEL")
+			player.global_position = clamped_position
 
 # ==========================
 # Generar Posición del Enemigo
