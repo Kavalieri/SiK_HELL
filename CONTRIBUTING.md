@@ -1,8 +1,4 @@
-===========================
-CONTRIBUTING.md (English)
-===========================
-
-# Contributing to [Your Project Name]
+# Contributing to SiK HELL
 
 Thank you for your interest in contributing to [Your Project Name]! Your efforts help make this project better for everyone. Below are some guidelines to help you get started.
 
@@ -32,7 +28,7 @@ If you find a bug, please open an issue with the following information:
 - Steps to Reproduce: Steps to reproduce the behavior.
 - Expected Behavior: What you expected to happen.
 - Screenshots: If applicable, add screenshots to help explain your problem.
-- Environment: Include your operating system, Godot version, and any other relevant information.
+- Environment: Include your operating system, version, and any other relevant information.
 
 ### Suggesting Enhancements
 
@@ -46,7 +42,7 @@ We welcome suggestions for improvements! To suggest an enhancement, please open 
 
 1. Fork the Repository: Click the "Fork" button at the top right of this page.
 2. Clone Your Fork:
-   git clone https://github.com/your-username/[Your-Project-Name].git
+   git clone https://github.com/Kavalieri/SiK_HELL.git
 3. Create a Branch:
    git checkout -b feature/YourFeatureName
 4. Commit Your Changes: Follow the guidelines in the "Commit Messages" section below.
@@ -81,11 +77,9 @@ We welcome suggestions for improvements! To suggest an enhancement, please open 
 
 Thank you for taking the time to contribute! Your support is greatly appreciated.
 
-
-
-===========================
-CONTRIBUTING.md (Español)
-===========================
+--------------------------
+(Español)
+--------------------------
 
 # Contribuyendo a [Nombre de Tu Proyecto]
 
@@ -117,7 +111,7 @@ Si encuentras un error, por favor abre un issue con la siguiente información:
 - Pasos para Reproducir: Pasos para reproducir el comportamiento.
 - Comportamiento Esperado: Qué esperabas que sucediera.
 - Capturas de Pantalla: Si aplica, añade capturas de pantalla para ayudar a explicar tu problema.
-- Entorno: Incluye tu sistema operativo, versión de Godot y cualquier otra información relevante.
+- Entorno: Incluye tu sistema operativo, versión y cualquier otra información relevante.
 
 ### Sugerencias de Mejoras
 
@@ -131,7 +125,7 @@ Si encuentras un error, por favor abre un issue con la siguiente información:
 
 1. Fork del Repositorio: Haz clic en el botón "Fork" en la esquina superior derecha de esta página.
 2. Clona Tu Fork:
-   git clone https://github.com/tu-usuario/[Nombre-De-Tu-Proyecto].git
+   git clone https://github.com/Kavalieri/SiK_HELL.git
 3. Crea una Rama:
    git checkout -b feature/TuNombreDeFeature
 4. Haz Commit de Tus Cambios: Sigue las pautas de "Mensajes de Commit" descritas abajo.
