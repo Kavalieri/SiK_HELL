@@ -1,4 +1,4 @@
-extends Area2D
+class_name class_projectile_1 extends Area2D
 
 # ==========================
 # Propiedades Exportadas

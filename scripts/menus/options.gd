@@ -1,4 +1,4 @@
-extends Control
+class_name class_options_menu extends Control
 
 
 func _on_sonido_pressed() -> void:

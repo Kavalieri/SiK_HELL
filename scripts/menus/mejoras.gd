@@ -1,4 +1,4 @@
-extends Control
+class_name class_mejoras_menu extends Control
 
 # ==========================
 # Variables Internas

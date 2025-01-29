@@ -1,4 +1,4 @@
-extends Control
+class_name class_resultado_menu extends Control
 
 
 func _on_continuar_pressed() -> void:

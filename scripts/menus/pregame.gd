@@ -1,4 +1,4 @@
-extends Control
+class_name class_pregame_menu extends Control
 
 signal pj(selected_pj)
 

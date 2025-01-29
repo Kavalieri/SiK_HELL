@@ -1,6 +1,4 @@
-extends Node
-
-class_name class_syslog
+class_name class_SYSLOG extends Node
 
 # ==========================
 # Configuración General

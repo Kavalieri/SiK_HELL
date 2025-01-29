@@ -1,4 +1,4 @@
-extends Control
+class_name class_attacks_menu extends Control
 
 signal attack(selected_attack)
 

@@ -1,5 +1,4 @@
-extends CharacterBody2D
-class_name class_pj1
+class_name class_pj_1 extends CharacterBody2D
 
 # ==========================
 # Propiedades Exportadas

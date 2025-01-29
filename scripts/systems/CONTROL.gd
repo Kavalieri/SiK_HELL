@@ -1,5 +1,4 @@
-extends Node
-class_name class_control
+class_name class_control extends Node
 
 # ==========================
 # Señales Emitidas

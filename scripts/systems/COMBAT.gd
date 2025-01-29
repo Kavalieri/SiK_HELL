@@ -1,5 +1,4 @@
-extends Node
-class_name class_combat
+class_name class_COMBAT extends Node
 
 # ==========================
 # Configuración del Pool de Proyectiles

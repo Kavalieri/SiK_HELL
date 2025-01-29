@@ -1,4 +1,4 @@
-extends Control
+class_name class_pause_menu extends Control
 
 # ==========================
 # Referencias Exportadas

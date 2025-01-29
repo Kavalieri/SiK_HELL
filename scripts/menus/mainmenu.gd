@@ -1,4 +1,4 @@
-extends Control
+class_name class_mainmenu_menu extends Control
 
 
 func _on_cargar_pressed() -> void:

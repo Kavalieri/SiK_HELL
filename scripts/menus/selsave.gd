@@ -1,4 +1,4 @@
-extends Control
+class_name class_selsave_menu extends Control
 
 signal savegame(selected_save)
 

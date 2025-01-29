@@ -1,4 +1,4 @@
-extends Node
+class_name class_SAVE extends Node
 
 # ==========================
 # Señales emitidas

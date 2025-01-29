@@ -1,5 +1,4 @@
-extends Area2D
-class_name class_nivel1
+class_name class_nivel_1 extends Area2D
 
 # ==========================
 # Referencias de Escenas
