@@ -1,4 +1,4 @@
-# SiK HELL (English)
+# SiK HELL
 
 Another bullet hell 2D game.
 
@@ -44,7 +44,7 @@ SiK HELL is a Bullet Hell game developed using the Godot Engine. Dive into inten
 
 ## Contributing
 
-We welcome contributions! See our [Contributing Guidelines](CONTRIBUTING.md) for more details.
+We welcome contributions! See our [Contributing Guidelines] (CONTRIBUTING.md) for more details.
 
 ## License
 
@@ -56,9 +56,10 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE (LICENSE file).
 - OpenGameArt for free game assets
 
 --------------------------
+(Español)
+--------------------------
 
-
-# SiK HELL (Español)
+# SiK HELL
 
 ## Descripción
 
@@ -97,7 +98,7 @@ SiK HELL es un juego de Bullet Hell desarrollado con el Motor Godot. Sumérgete 
 
 ## Contribuyendo
 
-¡Aceptamos contribuciones! Revisa [nuestras pautas](CONTRIBUTING.md).
+¡Aceptamos contribuciones! Revisa [nuestras pautas] (CONTRIBUTING.md).
 
 ## Licencia
 
