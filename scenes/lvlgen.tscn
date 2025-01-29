@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://chnojiwnbuxls"]
-
-[ext_resource type="Script" path="res://scripts/lvlgen.gd" id="1_o8vj8"]
-
-[node name="lvlgen" type="Area2D"]
-script = ExtResource("1_o8vj8")
