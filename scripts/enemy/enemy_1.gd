@@ -1,5 +1,11 @@
-class_name class_enemy_1 extends CharacterBody2D
+# ==========================
+# enemy_1.gd 
+# ==========================
+class_name class_enemy_1 extends CharacterBody2D 
 
+# ==========================
+# Signals 
+# ========================== 
 signal enemy_defeated
 
 # ==========================

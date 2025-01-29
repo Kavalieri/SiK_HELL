@@ -1,7 +1,10 @@
+# ==========================
+# SAVE.gd
+# ==========================
 class_name class_SAVE extends Node
 
 # ==========================
-# Señales emitidas
+# Signals
 # ==========================
 signal save_system_ready
 
