@@ -56,7 +56,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE (LICENSE file).
 - OpenGameArt for free game assets
 
 --------------------------
-README (Español)
+(Español)
 --------------------------
 
 # SiK HELL
