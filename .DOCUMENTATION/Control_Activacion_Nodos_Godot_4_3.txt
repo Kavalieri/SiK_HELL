@@ -1,0 +1,123 @@
+
+Controlar la Activación de Nodos Instanciados en Godot 4.3
+==========================================================
+
+1. **Controlar la Activación Manualmente**
+-----------------------------------------
+Puedes deshabilitar el comportamiento inicial de los nodos instanciados usando una variable de estado, y activarlos solo cuando se emita una señal o se llame a un método.
+
+Ejemplo:
+--------
+Script del Nodo Instanciado (`Instancia.gd`):
+```
+extends Node
+
+# Variable para controlar si el nodo está activo
+var is_active: bool = false
+
+func _ready():
+    # Deshabilita lógica inicial
+    set_process(false)
+
+func activate():
+    # Activa el nodo cuando se llame a esta función
+    is_active = true
+    set_process(true)
+    # Lógica que deseas iniciar al activarlo
+    print("Nodo activado")
+```
+
+Escena Principal (`MainScene.gd`):
+```
+extends Node
+
+@onready var instancia_scene = preload("res://path_to_instancia.tscn")
+
+func _ready():
+    var instancia = instancia_scene.instantiate()
+    add_child(instancia)
+    # No se activa automáticamente
+
+    # Activa la instancia después de 2 segundos
+    yield(get_tree().create_timer(2.0), "timeout")
+    instancia.activate()
+```
+
+2. **Usar Señales para Controlar la Activación**
+-----------------------------------------------
+Puedes emitir señales desde el nodo padre o un nodo controlador para activar las instancias.
+
+Ejemplo con Señales:
+--------------------
+Script del Nodo Instanciado (`Instancia.gd`):
+```
+extends Node
+
+signal activated
+
+func _ready():
+    set_process(false)
+    connect("activated", self, "_on_activated")
+
+func _on_activated():
+    set_process(true)
+    print("Nodo activado por señal")
+```
+
+Escena Principal (`MainScene.gd`):
+```
+extends Node
+
+@onready var instancia_scene = preload("res://path_to_instancia.tscn")
+
+func _ready():
+    var instancia = instancia_scene.instantiate()
+    add_child(instancia)
+    
+    # Envía una señal para activar la instancia después de 2 segundos
+    yield(get_tree().create_timer(2.0), "timeout")
+    instancia.emit_signal("activated")
+```
+
+3. **Usar Grupos para Controlar Múltiples Instancias**
+-----------------------------------------------------
+Si tienes muchas instancias que deseas activar a la vez, puedes añadirlas a un grupo y controlar todas a la vez.
+
+Ejemplo:
+--------
+Script del Nodo Instanciado (`Instancia.gd`):
+```
+extends Node
+
+func _ready():
+    set_process(false)
+
+func activate():
+    set_process(true)
+    print("Nodo activado desde grupo")
+```
+
+Escena Principal (`MainScene.gd`):
+```
+extends Node
+
+@onready var instancia_scene = preload("res://path_to_instancia.tscn")
+
+func _ready():
+    for i in range(3): # Instanciar múltiples nodos
+        var instancia = instancia_scene.instantiate()
+        add_child(instancia)
+        instancia.add_to_group("activables")
+
+    # Activa todos los nodos del grupo después de 2 segundos
+    yield(get_tree().create_timer(2.0), "timeout")
+    get_tree().call_group("activables", "activate")
+```
+
+Ventajas de Cada Método:
+------------------------
+1. **Control Manual:** Es ideal para casos donde el control de activación depende de eventos personalizados o condiciones específicas.
+2. **Señales:** Útil cuando necesitas una comunicación clara entre nodos.
+3. **Grupos:** Excelente para activar múltiples nodos con una sola llamada.
+
+¡Usa el método que mejor se ajuste a la estructura de tu juego! Si necesitas más ayuda, no dudes en preguntar. 😊

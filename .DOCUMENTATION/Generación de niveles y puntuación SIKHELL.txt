@@ -1,0 +1,21 @@
+Generación de niveles y puntuación:
+
+En esta fase del desarrollo trabajaremos configuración de los personajes, los enemigos, las habilidades de ataque y la generación de niveles con generación de personajes, enemigos y habilidades dinámica aún por definir.
+
+Trabajaremos en un sistema de powerups dinámico que podrá aumentar las estadísticas durante ese nivel o modificar el ataque en forma o efecto.
+
+También trabajaremos en el sistema de puntuación que contabilizará el avance del jugador y lo convertirá a puntos que podrá gastar en una tienda de estadísticas que ya está generada en su fase inicia.
+
+Finalmente nos aseguraremos de integrar un sistema de generación de niveles que unifique todos los generadores y nos permita modularizar la creación de futuros niveles.
+
+El objetivo será tener 3 niveles distintos con sus características distintas y determinadas o únicas.
+
+Cada nivel tendrá fases infinitas, y el generador de niveles se ocupará de incluir más enemigos o aumentar el daño o salud de forma dinámica hasta que el jugador pierda. 
+
+Cada nivel iniciara en la fase 1 y se indentificará con nivel/fase en el caso de nivel 1 1/1, en el caso de nivel2 2/1 y en el caso de nivel3 3/1.
+
+En cuanto el jugador termine con todos los enemigos de esa fase, se generará una fase más complicada incrementando en 1 la fase. 
+
+El jugador ganará si aguanta 5 minutos en el nivel sin morir.
+
+El jugador perderá al perder toda su salud.

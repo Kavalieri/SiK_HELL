@@ -1,0 +1,110 @@
+## Controlar la Inicialización de Escenas en Godot
+
+En este documento se explican varias formas de evitar que una escena se inicie junto con el resto, incluso si está instanciada dentro de otro escenario, así como técnicas para elegir si un escenario se inicializa o no.
+
+---
+
+### 1. **Deshabilitar la Ejecución Inicial de una Escena**
+Puedes desactivar el nodo raíz de la escena (o cualquier subnodo) utilizando las propiedades `set_process(false)` o `set_physics_process(false)` en su script asociado:
+
+#### Ejemplo:
+```gdscript
+extends Node
+
+func _ready():
+    # Detiene la ejecución del nodo y sus hijos
+    set_process(false)
+    set_physics_process(false)
+```
+
+Para activarlo más tarde:
+```gdscript
+set_process(true)
+set_physics_process(true)
+```
+
+---
+
+### 2. **Controlar la Inicialización desde el Nodo Padre**
+Puedes evitar que una escena cargue su lógica configurándola desde el nodo padre que la instancia.
+
+#### Ejemplo:
+```gdscript
+extends Node
+
+func _ready():
+    var scene_instance = preload("res://path/to/scene.tscn").instantiate()
+    scene_instance.set_process(false)  # Evita que el nodo procese su lógica
+    add_child(scene_instance)
+
+    # Más tarde puedes activarlo:
+    scene_instance.set_process(true)
+```
+
+---
+
+### 3. **Usar un Nodo Placeholder**
+En lugar de instanciar la escena directamente, puedes cargarla sólo cuando sea necesario.
+
+#### Ejemplo:
+```gdscript
+extends Node
+
+var scene_instance = null
+
+func _ready():
+    # Prepara el nodo, pero no lo instancia
+    pass  # Por ahora no hacemos nada
+
+func load_scene():
+    if not scene_instance:
+        scene_instance = preload("res://path/to/scene.tscn").instantiate()
+        add_child(scene_instance)
+```
+
+---
+
+### 4. **Controlar la Visibilidad**
+Si la escena es visual y no necesitas que se procese al inicio, puedes establecer su visibilidad en falso:
+
+#### Ejemplo:
+```gdscript
+$SceneRoot.visible = false
+```
+
+Luego, para activarla:
+```gdscript
+$SceneRoot.visible = true
+```
+
+---
+
+### 5. **Cargar y Eliminar Dinámicamente**
+Otra opción es no instanciar la escena al inicio y, en su lugar, cargarla bajo demanda desde un script:
+
+#### Ejemplo:
+```gdscript
+func add_scene():
+    var scene = preload("res://path/to/scene.tscn").instantiate()
+    add_child(scene)
+
+func remove_scene():
+    if $SceneRoot:
+        $SceneRoot.queue_free()
+```
+
+Esto asegura que la escena solo exista cuando sea necesaria.
+
+---
+
+### **Resumen de Técnicas**
+1. **Deshabilitar Procesamiento:** Utiliza `set_process(false)` y `set_physics_process(false)` para detener la lógica inicial.
+2. **Placeholder:** Carga la escena bajo demanda mediante `instantiate()`.
+3. **Visibilidad:** Configura `visible = false` para evitar su renderizado inicial.
+4. **Carga y Eliminación Dinámica:** Instancia y elimina la escena según sea necesario.
+
+Estas técnicas te permiten un control total sobre cuándo y cómo se inicializan las escenas dentro de tu juego en Godot.
+
+---
+
+Si necesitas ejemplos más detallados o personalizados, no dudes en preguntar. ¡Buena suerte con tu proyecto! 😊
