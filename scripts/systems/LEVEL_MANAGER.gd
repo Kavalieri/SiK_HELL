@@ -4,6 +4,11 @@
 class_name class_LEVEL_MANAGER extends Node
 
 # ==========================
+# Signals
+# ==========================
+signal phase_updated(new_phase: int)
+
+# ==========================
 # Variables Internas
 # ==========================
 var player: CharacterBody2D
@@ -18,27 +23,27 @@ func initialize_level():
 	phase = SAVE.get_phase()
 	SYSLOG.debug_log("LEVEL_MANAGER: Inicializando nivel en fase %d.", "LEVEL_MANAGER")
 
-	# 🔹 Verificar si ya hay un jugador en la escena
+	# 🔹 Verificar si el jugador sigue en la escena antes de instanciar uno nuevo
 	var jugadores = get_tree().get_nodes_in_group("pj")
 	if jugadores.size() > 0:
-		SYSLOG.error_log("Ya existe un jugador en la escena. No se instanciará otro.", "LEVEL_MANAGER")
-		return
+		SYSLOG.debug_log("Se detectó un jugador en escena. Se reutiliza en lugar de instanciar uno nuevo.", "LEVEL_MANAGER")
+		player = jugadores[0]
+	else:
+		# 🔹 Instanciar el jugador si no existe
+		player = PLAYER_MANAGER.load_player()
+		if player:
+			var nivel = get_tree().get_nodes_in_group("nivel")[0] if get_tree().get_nodes_in_group("nivel").size() > 0 else null
+			if nivel:
+				nivel.add_child(player)
+				player.global_position = Vector2(300, 300)
+				player.add_to_group("pj")
+				SYSLOG.debug_log("Jugador añadido a nivel correctamente.", "LEVEL_MANAGER")
+			else:
+				SYSLOG.error_log("No se encontró la escena del nivel para añadir el jugador.", "LEVEL_MANAGER")
 
-	# 🔹 Instanciar el jugador
-	player = PLAYER_MANAGER.load_player()
-	if player:
-		var nivel = get_tree().get_nodes_in_group("nivel")[0] if get_tree().get_nodes_in_group("nivel").size() > 0 else null
-		if nivel:
-			nivel.add_child(player)
-			player.global_position = Vector2(300, 300)
-			player.add_to_group("pj")
-			SYSLOG.debug_log("Jugador añadido a nivel_1 correctamente.", "LEVEL_MANAGER")
-		else:
-			SYSLOG.error_log("No se encontró la escena del nivel para añadir el jugador.", "LEVEL_MANAGER")
-
-		# 🔹 Conectar la señal de muerte del PJ para detectar GAME OVER
-		if not player.is_connected("pj_muerto", Callable(self, "_on_pj_muerto")):
-			player.connect("pj_muerto", Callable(self, "_on_pj_muerto"))
+	# 🔹 Conectar señal de muerte del jugador
+	if not player.is_connected("pj_muerto", Callable(self, "_on_pj_muerto")):
+		player.connect("pj_muerto", Callable(self, "_on_pj_muerto"))
 
 	# 🔹 Configurar y generar enemigos
 	ENEMY_SPAWNER.configure_spawner()
@@ -47,6 +52,9 @@ func initialize_level():
 	# 🔹 Conectar la señal de victoria
 	if not ENEMY_SPAWNER.is_connected("all_enemies_defeated", Callable(self, "_on_all_enemies_defeated")):
 		ENEMY_SPAWNER.connect("all_enemies_defeated", Callable(self, "_on_all_enemies_defeated"))
+
+	# 🔹 Ahora sí emitimos la señal para actualizar el HUD
+	emit_signal("phase_updated", phase)
 
 # ==========================
 # Manejo del Resultado del Nivel
@@ -80,6 +88,7 @@ func guardar_progreso(resultado: String):
 	# 🔹 Actualizar la fase en caso de victoria
 	if resultado == "victoria":
 		SAVE.game_data[selected_savegame_key][selected_pj_key]["phase"] += 1
+		phase = SAVE.game_data[selected_savegame_key][selected_pj_key]["phase"]
 
 	SAVE.save_game()
 
@@ -94,7 +103,7 @@ func reiniciar_nivel():
 	if resultado_nodo.size() > 0:
 		resultado_nodo[0].canvas_layer.visible = false
 
-	# 🔹 Desconectar señales activas para evitar eventos no deseados
+	# 🔹 Desconectar señales activas
 	if player and player.is_connected("pj_muerto", Callable(self, "_on_pj_muerto")):
 		player.disconnect("pj_muerto", Callable(self, "_on_pj_muerto"))
 
@@ -104,10 +113,12 @@ func reiniciar_nivel():
 	# 🔹 Limpiar la escena antes de regenerar
 	get_tree().paused = false  
 	limpiar_escena()
-	await get_tree().process_frame  # 🔹 Esperar a que se eliminen todos los nodos
+	await get_tree().process_frame  # 🔹 Esperar a que los nodos sean eliminados
+
+	# 🔹 Asegurar que la referencia del jugador sea nula antes de reinstanciar
+	player = null  
 
 	# 🔹 Reinstanciar jugador y enemigos tras la limpieza
-	await get_tree().process_frame  # 🔹 Forzar un frame más para asegurar la eliminación
 	initialize_level()
 
 # ==========================
@@ -151,21 +162,21 @@ func get_enemy_count_for_phase() -> int:
 func limpiar_escena():
 	SYSLOG.debug_log("LEVEL_MANAGER: Limpiando la escena antes de recargar.", "LEVEL_MANAGER")
 
-	# 🔹 Eliminar jugador anterior si existe
+	# 🔹 Eliminar el jugador anterior si sigue en escena
 	for pj in get_tree().get_nodes_in_group("pj"):
 		if pj:
 			pj.queue_free()
-			SYSLOG.debug_log("Jugador anterior eliminado.", "LEVEL_MANAGER")
+			SYSLOG.debug_log("Jugador eliminado correctamente.", "LEVEL_MANAGER")
 
 	# 🔹 Eliminar enemigos
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if enemy:
 			enemy.queue_free()
 
-	# 🔹 Eliminar proyectiles
+	# 🔹 Desactivar proyectiles en lugar de eliminarlos
 	for projectile in get_tree().get_nodes_in_group("projectile"):
 		if projectile:
-			projectile.queue_free()
+			COMBAT.deactivate_projectile(projectile)
 
 	# 🔹 Reiniciar puntos del HUD
 	var hud = get_tree().get_nodes_in_group("level_hud")[0] if get_tree().get_nodes_in_group("level_hud").size() > 0 else null
@@ -173,12 +184,12 @@ func limpiar_escena():
 		hud.points = 0
 		hud._actualizar_hud()
 
-	# 🔹 Esperar a que los nodos sean eliminados antes de continuar
+	# 🔹 Esperar un frame extra para asegurar que los nodos sean eliminados
 	await get_tree().process_frame
-	await get_tree().process_frame  # 🔹 Segundo frame extra para mayor seguridad
+	await get_tree().process_frame
 
 	SYSLOG.debug_log("LEVEL_MANAGER: Escena limpiada correctamente.", "LEVEL_MANAGER")
-
+	
 # ==========================
 # Manejo de la Victoria
 # ==========================

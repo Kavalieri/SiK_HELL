@@ -272,10 +272,15 @@ func _morir() -> void:
 	is_dead = true
 	animated_sprite.play("dead")
 	SYSLOG.debug_log("pj1 ha muerto.", "PJ1")
+
+	# 🔹 Emitir la señal de muerte del jugador
 	emit_signal("pj_muerto")
 
-	if not animated_sprite.is_connected("animation_finished", Callable(self, "_on_animation_finished")):
-		animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	# 🔹 Asegurar que el jugador se elimine correctamente
+	await animated_sprite.animation_finished  # 🔹 Esperar a que termine la animación de muerte
+	queue_free()  # 🔹 Eliminar el nodo del jugador de la escena
+
+	SYSLOG.debug_log("pj1 eliminado de la escena tras morir.", "PJ1")
 
 func _on_animation_finished() -> void:
 	if animated_sprite.animation == "dead":

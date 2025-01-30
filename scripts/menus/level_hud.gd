@@ -26,6 +26,10 @@ func _ready() -> void:
 	_actualizar_datos_guardado()
 	_actualizar_hud()
 
+	# 🔹 Conectar `phase_updated` para actualizar la fase en tiempo real
+	if LEVEL_MANAGER and not LEVEL_MANAGER.is_connected("phase_updated", Callable(self, "_actualizar_phase")):
+		LEVEL_MANAGER.connect("phase_updated", Callable(self, "_actualizar_phase"))
+
 # ==========================
 # Cargar Datos del Guardado
 # ==========================
@@ -87,3 +91,12 @@ func guardar_puntos() -> void:
 	SAVE.save_game()
 
 	SYSLOG.debug_log("Puntos guardados en archivo - Total en save: %d (sumados %d)" % [global_points + points, points], "LEVEL_HUD")
+
+# ==========================
+# Actualizar la Fase en el HUD
+# ==========================
+func _actualizar_phase(new_phase: int) -> void:
+	phase = new_phase
+	_actualizar_hud()
+
+	SYSLOG.debug_log("HUD actualizado - Nueva Phase: %d después de iniciar el nivel" % phase, "LEVEL_HUD")
