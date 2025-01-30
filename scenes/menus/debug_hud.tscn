@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5yjbgqojbu52"]
+
+[ext_resource type="Script" path="res://scripts/menus/debug_hud.gd" id="1_r57h7"]
+
+[node name="debug_hud" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_r57h7")
+
+[node name="debug_hud" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="pj_1" type="Label" parent="debug_hud"]
+offset_right = 264.0
+offset_bottom = 403.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG Pj_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:
+energy:"
+
+[node name="enemy_1" type="Label" parent="debug_hud"]
+offset_left = 8.0
+offset_top = 498.0
+offset_right = 348.0
+offset_bottom = 843.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG enemy_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:"

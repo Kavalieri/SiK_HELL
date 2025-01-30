@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://b63xpnlhv7lne"]
+
+[ext_resource type="Script" path="res://scripts/menus/level_hud.gd" id="1_ugtkf"]
+
+[node name="level_hud" type="CanvasLayer"]
+layer = 3
+script = ExtResource("1_ugtkf")
+
+[node name="points" type="Label" parent="."]
+offset_left = 1647.0
+offset_top = 25.0
+offset_right = 1826.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 40
+text = "Puntos: 0"
+
+[node name="phase" type="Label" parent="."]
+offset_left = 978.0
+offset_top = 40.0
+offset_right = 1114.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 40
+text = "FASE: 1"
+
+[node name="level" type="Label" parent="."]
+offset_left = 805.0
+offset_top = 40.0
+offset_right = 947.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 40
+text = "NIVEL: 1"

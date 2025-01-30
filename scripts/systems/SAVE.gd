@@ -170,8 +170,47 @@ func load_game() -> Dictionary:
 		SYSLOG.error_log("El archivo de guardado '%s' no existe." % save_path, "SAVE")
 	
 	return {}  # Devuelve un diccionario vacío si hay errores
-	
-	
+
+# ==========================
+# Obtener Savegame y Personaje Seleccionado
+# ==========================
+func get_current_savegame_key() -> String:
+	game_data = load_game()
+	if game_data.is_empty():
+		SYSLOG.error_log("SAVE: No se pudo obtener el savegame actual.", "SAVE")
+		return ""
+
+	var savegame_value = game_data.get("savegame_value", 1)
+	return "savegame%d" % savegame_value
+
+func get_current_pj_key() -> String:
+	var savegame_key = get_current_savegame_key()
+	if savegame_key == "" or not game_data.has(savegame_key):
+		SYSLOG.error_log("SAVE: No se pudo obtener el personaje actual.", "SAVE")
+		return ""
+
+	var pj_value = game_data[savegame_key].get("pj_value", 1)
+	return "pj_%d" % pj_value
+
+func get_phase() -> int:
+	var savegame_key = get_current_savegame_key()
+	var pj_key = get_current_pj_key()
+
+	if savegame_key == "" or pj_key == "":
+		SYSLOG.error_log("SAVE: No se pudo obtener la fase actual.", "SAVE")
+		return 1
+
+	return game_data[savegame_key][pj_key].get("phase", 1)
+
+func get_level() -> int:
+	var savegame_key = get_current_savegame_key()
+	var pj_key = get_current_pj_key()
+
+	if savegame_key == "" or pj_key == "":
+		SYSLOG.error_log("SAVE: No se pudo obtener el nivel actual.", "SAVE")
+		return 1
+
+	return game_data[savegame_key][pj_key].get("level", 1)
 
 # ==========================
 # Crear copia de depuración sin cifrar

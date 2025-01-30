@@ -9,7 +9,6 @@ class_name class_COMBAT extends Node
 @export var pool_size: int = 50
 var projectile_pools = {}  # Diccionario para almacenar múltiples pools (por tipo de proyectil)
 var projectile_pool: Array[Node] = []
-var enemy_count: int = 1
 var lanzador = null
 
 # ==========================
@@ -20,23 +19,19 @@ func _inicializar_pool(projectile_scene: PackedScene) -> void:
 		SYSLOG.error_log("La escena base del proyectil no está configurada.", "COMBAT")
 		return
 
-	# Si la pool para este tipo de proyectil no existe, crearla
 	if not projectile_pools.has(projectile_scene):
 		projectile_pools[projectile_scene] = []
 
-	# Crear proyectiles y añadirlos a la pool correspondiente
 	var pool = projectile_pools[projectile_scene]
 	while pool.size() < pool_size:
 		var projectile = projectile_scene.instantiate()
-		projectile.set_meta("scene", projectile_scene)  # Definir el metadato 'scene'
+		projectile.set_meta("scene", projectile_scene)
 		projectile.hide()
 		projectile.is_active = false
 		add_child(projectile)
 		pool.append(projectile)
 
 	SYSLOG.debug_log("Pool inicializada para la escena: %s." % projectile_scene.resource_path, "COMBAT")
-
-
 
 # ==========================
 # Obtener Proyectil de la Pool
@@ -46,28 +41,31 @@ func _get_projectile(projectile_scene: PackedScene) -> Node:
 		_inicializar_pool(projectile_scene)
 
 	var pool = projectile_pools[projectile_scene]
+
 	for projectile in pool:
+		# 🔹 Verificar que el proyectil no ha sido liberado
+		if not is_instance_valid(projectile):
+			pool.erase(projectile)  # 🔹 Eliminar proyectil inválido de la Pool
+			continue
+
 		if not projectile.is_active:
 			projectile.is_active = true
 			projectile.show()
 			return projectile
 
-	SYSLOG.error_log("No hay proyectiles disponibles para la escena: %s." % projectile_scene.resource_path, "COMBAT")
+	SYSLOG.error_log("No hay proyectiles disponibles en la pool para: %s." % projectile_scene.resource_path, "COMBAT")
 	return null
-
+	
 # ==========================
 # Desactivar Proyectiles
 # ==========================
 func deactivate_projectile(projectile: Node) -> void:
-	if not projectile:
-		SYSLOG.error_log("Intento de desactivar un proyectil nulo.", "COMBAT")
+	if not is_instance_valid(projectile):
+		SYSLOG.error_log("Intento de desactivar un proyectil nulo o eliminado.", "COMBAT")
 		return
 
-	var pool = projectile_pools.get(projectile.get_meta("scene"), [])
-	if pool and projectile in pool:
-		SYSLOG.debug_log("Proyectil devuelto a la pool y restaurado.", "COMBAT")
-	else:
-		SYSLOG.error_log("Intento de desactivar un proyectil no registrado en la pool.", "COMBAT")
+	projectile.is_active = false
+	projectile.hide()
 
 # ==========================
 # Calcular Daño de Ataque de un PJ
@@ -127,9 +125,6 @@ func pj_attack_damage(proyectil: Node, objetivo: Node) -> void:
 	# Aplicar daño al objetivo
 	recibir_dano(objetivo, final_damage, 0, proyectil)
 	SYSLOG.debug_log("%s recibió un ataque de %s. Daño final aplicado: %d" % [objetivo.name, proyectil.name, final_damage], "COMBAT")
-
-
-
 
 # ==========================
 # Calcular Daño de un Enemigo
@@ -231,8 +226,6 @@ func actualizar_pj_damage_label(objetivo: Node, damage: int) -> void:
 		objetivo.add_child(timer)  # Añadir el temporizador como hijo del jugador
 		timer.start()
 
-
-
 # ==========================
 # Ocultar Daño Recibido
 # ==========================
@@ -248,8 +241,6 @@ func morir(objetivo: Node) -> void:
 		objetivo._morir()
 	else:
 		SYSLOG.error_log("El objetivo %s no tiene una función 'morir'." % objetivo.name, "COMBAT")
-
-
 
 func curar(objetivo: Node, cantidad: int) -> void:
 	objetivo.health += cantidad

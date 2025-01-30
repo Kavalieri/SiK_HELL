@@ -29,6 +29,33 @@ position = Vector2(1732, 189)
 [node name="enemy_spawn_2" type="Area2D" parent="."]
 position = Vector2(1002, 727)
 
+[node name="pj_1" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG Pj_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:
+energy:"
+
+[node name="enemy_1" type="Label" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 498.0
+offset_right = 348.0
+offset_bottom = 843.0
+theme_override_font_sizes/font_size = 40
+text = "DEBUG enemy_1:
+health:
+damage:
+speed:
+attack_speed:
+defense:"
+
 [node name="pause" parent="." instance=ExtResource("4_uu3kv")]
 offset_left = 973.0
 offset_top = 441.0
@@ -38,7 +65,3 @@ offset_bottom = 441.0
 [node name="level_hud" parent="." instance=ExtResource("4_b2d78")]
 
 [node name="resultado" parent="." instance=ExtResource("3_0jnpv")]
-offset_left = 523.0
-offset_top = 422.0
-offset_right = 523.0
-offset_bottom = 422.0

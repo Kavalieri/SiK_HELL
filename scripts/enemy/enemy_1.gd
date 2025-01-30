@@ -116,7 +116,7 @@ func _morir() -> void:
 	is_dead = true
 	animated_sprite.play("dead")
 	emit_signal("enemy_defeated")
-	SYSLOG.debug_log("El enemigo ha muerto.", "ENEMY")
+	SYSLOG.debug_log("El enemigo ha muerto, señal emitida.", "ENEMY")
 	queue_free()
 
 func set_health(nueva_salud: int) -> void:

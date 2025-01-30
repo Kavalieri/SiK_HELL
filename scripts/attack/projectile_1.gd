@@ -115,17 +115,14 @@ func _deshabilitar() -> void:
 		return
 
 	is_active = false
-	self.hide()
-	self.set_process(false)
-
-	# Reiniciar propiedades clave
+	hide()
+	set_process(false)
 	traveled_distance = 0.0
 	collision_shape.disabled = false
 	animated_sprite.stop()
 	animated_sprite.frame = 0
-
-	SYSLOG.debug_log("Proyectil desactivado.", "PROJECTILE")
-	COMBAT.deactivate_projectile(self)  # Devolver a la pool
+	SYSLOG.debug_log("Proyectil devuelto a la pool.", "PROJECTILE")
+	COMBAT.deactivate_projectile(self)
 
 func launch_at(target_position: Vector2, lanzador_nodo: Node) -> void:
 	initialize((target_position - global_position).normalized(), lanzador_nodo)

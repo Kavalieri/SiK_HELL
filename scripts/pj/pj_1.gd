@@ -4,6 +4,11 @@
 class_name class_pj_1 extends CharacterBody2D
 
 # ==========================
+# Signals
+# ==========================
+signal pj_muerto
+
+# ==========================
 # Propiedades Exportadas
 # ==========================
 @export var health: float = 100.0
@@ -267,6 +272,7 @@ func _morir() -> void:
 	is_dead = true
 	animated_sprite.play("dead")
 	SYSLOG.debug_log("pj1 ha muerto.", "PJ1")
+	emit_signal("pj_muerto")
 
 	if not animated_sprite.is_connected("animation_finished", Callable(self, "_on_animation_finished")):
 		animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))

@@ -21,6 +21,9 @@ SYSLOG="*res://scripts/systems/SYSLOG.gd"
 CONTROL="*res://scripts/systems/CONTROL.gd"
 SAVE="*res://scripts/systems/SAVE.gd"
 COMBAT="*res://scripts/systems/COMBAT.gd"
+ENEMY_SPAWNER="*res://scripts/systems/ENEMY_SPAWNER.gd"
+PLAYER_MANAGER="*res://scripts/systems/PLAYER_MANAGER.gd"
+LEVEL_MANAGER="*res://scripts/systems/LEVEL_MANAGER.gd"
 
 [display]
 

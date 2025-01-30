@@ -331,6 +331,7 @@ script = ExtResource("1_xad76")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -28)
+rotation = 3.26028
 scale = Vector2(0.248722, 0.248722)
 sprite_frames = SubResource("SpriteFrames_6apgy")
 animation = &"dead"
