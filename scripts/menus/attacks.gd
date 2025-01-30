@@ -1,10 +1,21 @@
+# ==========================
+# attacks.gd 
+# ==========================
 class_name class_attacks_menu extends Control
 
+# ==========================
+# Signals 
+# ==========================
 signal attack(selected_attack)
+
+
 
 func _ready() -> void:
 	CONTROL.connect_signals(self) # Conectamos las señales directamente a CONTROL, script en Autoload
 
+# ==========================
+# Buttons
+# ==========================
 func _on_attack1_pressed() -> void:
 	var selected_attack = "projectile_1"
 	emit_signal("attack", selected_attack)

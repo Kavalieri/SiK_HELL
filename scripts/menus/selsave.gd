@@ -1,5 +1,11 @@
+# ==========================
+# selsave.gd 
+# ==========================
 class_name class_selsave_menu extends Control
 
+# ==========================
+# Signals
+# ==========================
 signal savegame(selected_save)
 
 # ==========================

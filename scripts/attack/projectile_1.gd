@@ -1,3 +1,6 @@
+# ==========================
+# projectile_1.gd 
+# ==========================
 class_name class_projectile_1 extends Area2D
 
 # ==========================

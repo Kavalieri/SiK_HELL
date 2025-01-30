@@ -1,3 +1,6 @@
+# ==========================
+# mejoras.gd 
+# ==========================
 class_name class_mejoras_menu extends Control
 
 # ==========================

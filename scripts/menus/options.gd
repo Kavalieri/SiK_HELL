@@ -1,6 +1,11 @@
+# ==========================
+# options.gd 
+# ==========================
 class_name class_options_menu extends Control
 
-
+# ==========================
+# Buttons
+# ==========================
 func _on_sonido_pressed() -> void:
 	pass # Replace with function body.
 

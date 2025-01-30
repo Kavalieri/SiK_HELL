@@ -1,12 +1,23 @@
+# ==========================
+# pregame.gd
+# ==========================
 class_name class_pregame_menu extends Control
 
+# ==========================
+# Signals
+# ==========================
 signal pj(selected_pj)
 
+# ==========================
+# Funciones principales
+# ==========================
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	CONTROL.connect_signals(self) # Conectamos las señales directamente a CONTROL, script en Autoload
 
-
+# ==========================
+# Buttons
+# ==========================
 func _on_aceptar_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/niveles/nivel_1.tscn")
 	SYSLOG.debug_log("A jugar!", "PREGAME")
