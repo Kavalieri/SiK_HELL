@@ -1,7 +1,7 @@
 # ==========================
 # COMBAT.gd
 # ==========================
-class_name class_COMBAT extends Node
+class_name COMBAT_c extends Node
 # ==========================
 # Signals
 # ==========================
@@ -45,6 +45,10 @@ func _get_projectile(projectile_scene: PackedScene) -> Node:
 
 	var pool = projectile_pools[projectile_scene]
 
+	# Log de depuración: verificar cantidad de proyectiles disponibles
+	SYSLOG.debug_log("Solicitud de proyectil - Lanzador: %s, Pool actual: %d" % 
+		[lanzador, pool.size()], "COMBAT")
+
 	for projectile in pool:
 		# 🔹 Verificar que el proyectil no ha sido liberado
 		if not is_instance_valid(projectile):
@@ -54,6 +58,8 @@ func _get_projectile(projectile_scene: PackedScene) -> Node:
 		if not projectile.is_active:
 			projectile.is_active = true
 			projectile.show()
+			SYSLOG.debug_log("Proyectil entregado a %s. Restantes en pool: %d" % 
+				[lanzador, pool.size()], "COMBAT")
 			return projectile
 
 	SYSLOG.error_log("No hay proyectiles disponibles en la pool para: %s." % projectile_scene.resource_path, "COMBAT")

@@ -1,7 +1,7 @@
 # ==========================
 # ENEMY_SPAWNER.gd
 # ==========================
-class_name class_ENEMY_SPAWNER extends Node
+class_name ENEMY_SPAWNER_c extends Node
 
 # ==========================
 # Señales
@@ -13,7 +13,7 @@ signal all_enemies_defeated
 # ==========================
 @export var enemy_scenes: Dictionary = {
 	"basic": preload("res://scenes/enemies/enemy_1.tscn"),
-	"fast": preload("res://scenes/enemies/enemy_1.tscn"),
+	"fast": preload("res://scenes/enemies/enemy_2.tscn"),
 	"strong": preload("res://scenes/enemies/enemy_1.tscn")
 }
 @export var enemy_distribution: Dictionary = {
@@ -37,23 +37,6 @@ var save_data: Dictionary = {}
 func _ready() -> void:
 	SYSLOG.debug_log("ENEMY_SPAWNER inicializado.", "ENEMY_SPAWNER")
 
-	# Buscar todas las áreas de spawn en la escena actual con nombres "enemy_spawn_1", "enemy_spawn_2", ...
-	var all_spawn_areas = get_tree().current_scene.get_children()
-	for node in all_spawn_areas:
-		if node is Area2D and node.name.begins_with("enemy_spawn_"):
-			enemy_spawn_areas.append(node)
-
-	# ✅ Construir la lista de nombres de forma compatible con GDScript
-	if enemy_spawn_areas.is_empty():
-		SYSLOG.error_log("No se encontraron áreas de spawn en la escena.", "ENEMY_SPAWNER")
-	else:
-		var area_names_list = []
-		for area in enemy_spawn_areas:
-			area_names_list.append(area.name)  # Agregamos cada nombre a la lista
-
-		var area_names_string = ", ".join(area_names_list)  # Convertimos la lista en string
-		SYSLOG.debug_log("Se encontraron %d áreas de spawn: [%s]" % [enemy_spawn_areas.size(), area_names_string], "ENEMY_SPAWNER")
-
 # ==========================
 # Configuración de Enemigos por Nivel
 # ==========================
@@ -73,11 +56,18 @@ func configure_spawner():
 func spawn_enemies():
 	enemies.clear()
 	enemies_alive = 0  # 🔹 Resetear contador
-	
+
+	# 🔹 Verificar y detectar zonas de spawn antes de generar enemigos
+	_detect_spawn_areas()
+
+	if enemy_spawn_areas.is_empty():
+		SYSLOG.error_log("No se pueden generar enemigos porque no hay áreas de spawn.", "ENEMY_SPAWNER")
+		return
+
 	var max_enemies = LEVEL_MANAGER.get_enemy_count_for_phase()
 	SYSLOG.debug_log("Generando %d enemigos..." % max_enemies, "ENEMY_SPAWNER")
 
-	var available_enemies = enemy_distribution.get(phase, ["basic"])
+	var available_enemies = _get_enemy_distribution_for_phase(phase)
 	for i in range(max_enemies):
 		var enemy_type = available_enemies.pick_random()
 		var enemy = enemy_scenes[enemy_type].instantiate()
@@ -93,7 +83,35 @@ func spawn_enemies():
 		enemies_alive += 1
 
 	SYSLOG.debug_log("Enemigos generados correctamente. Total enemigos: %d" % enemies_alive, "ENEMY_SPAWNER")
-	
+
+# ==========================
+# Buscar las áreas de spawn en tiempo de ejecución
+# ==========================
+func _detect_spawn_areas():
+	enemy_spawn_areas.clear()  # 🔹 Limpiar la lista antes de buscar nuevas áreas
+
+	var nivel_actual = get_tree().get_first_node_in_group("nivel")
+	if not nivel_actual:
+		SYSLOG.error_log("No se encontró el nodo de nivel en la escena. No se pueden generar enemigos.", "ENEMY_SPAWNER")
+		return
+
+	for node in nivel_actual.get_children():
+		if node is Area2D and node.name.begins_with("enemy_spawn_"):
+			enemy_spawn_areas.append(node)
+
+	if enemy_spawn_areas.is_empty():
+		SYSLOG.error_log("No se encontraron áreas de spawn en la escena.", "ENEMY_SPAWNER")
+	else:
+		_log_spawn_areas()
+
+# ==========================
+# Registrar las áreas de spawn encontradas
+# ==========================
+func _log_spawn_areas():
+	var area_names_list = enemy_spawn_areas.map(func(area): return area.name)
+	var area_names_string = ", ".join(area_names_list)
+	SYSLOG.debug_log("Se encontraron %d áreas de spawn: [%s]" % [enemy_spawn_areas.size(), area_names_string], "ENEMY_SPAWNER")
+
 # ==========================
 # Generar Posición Aleatoria de Enemigos en Múltiples Áreas sin `shape`
 # ==========================
@@ -146,3 +164,21 @@ func restart_enemy_wave():
 			enemy.queue_free()
 	enemies.clear()
 	spawn_enemies()
+
+# ==========================
+# Obtener distribución de enemigos por fase
+# ==========================
+func _get_enemy_distribution_for_phase(phase: int) -> Array:
+	if enemy_distribution.has(phase):
+		return enemy_distribution[phase]
+
+	var last_phase = enemy_distribution.keys().max()
+	var last_distribution = enemy_distribution[last_phase]
+
+	var new_distribution = last_distribution.duplicate()
+	new_distribution.append_array(last_distribution)
+
+	enemy_distribution[phase] = new_distribution
+
+	SYSLOG.debug_log("Nueva distribución de enemigos para la fase %d: %s" % [phase, str(new_distribution)], "ENEMY_SPAWNER")
+	return new_distribution

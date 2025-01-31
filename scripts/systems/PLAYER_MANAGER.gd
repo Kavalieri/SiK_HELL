@@ -1,7 +1,7 @@
 # ==========================
 # PLAYER_MANAGER.gd
 # ==========================
-class_name class_PLAYER_MANAGER extends Node
+class_name PLAYER_MANAGER_c extends Node
 
 # ==========================
 # Variables Internas

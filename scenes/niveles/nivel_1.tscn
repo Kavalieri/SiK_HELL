@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://b30bscuisxi2k"]
+[gd_scene load_steps=8 format=3 uid="uid://b30bscuisxi2k"]
 
 [ext_resource type="Script" path="res://scripts/niveles/nivel_1.gd" id="1_51xpq"]
 [ext_resource type="PackedScene" uid="uid://dfmfmdy1lt2h8" path="res://scenes/menus/resultado.tscn" id="3_0jnpv"]
 [ext_resource type="PackedScene" uid="uid://b63xpnlhv7lne" path="res://scenes/menus/level_hud.tscn" id="4_b2d78"]
 [ext_resource type="Texture2D" uid="uid://be7unmf0bnktw" path="res://assets/fondos/game_background_1.png" id="4_qkn6n"]
 [ext_resource type="PackedScene" uid="uid://dk62lqdhj4lg7" path="res://scenes/menus/pause.tscn" id="4_uu3kv"]
+[ext_resource type="PackedScene" uid="uid://b5yjbgqojbu52" path="res://scenes/menus/debug_hud.tscn" id="6_asm8f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ko07v"]
 size = Vector2(1920, 1080)
@@ -42,3 +43,5 @@ offset_left = 523.0
 offset_top = 422.0
 offset_right = 523.0
 offset_bottom = 422.0
+
+[node name="debug_hud" parent="." instance=ExtResource("6_asm8f")]

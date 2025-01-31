@@ -1,7 +1,7 @@
 # ==========================
 # LEVEL_MANAGER.gd
 # ==========================
-class_name class_LEVEL_MANAGER extends Node
+class_name LEVEL_MANAGER_c extends Node
 
 # ==========================
 # Signals
@@ -15,6 +15,7 @@ var player: CharacterBody2D
 var phase: int = 1
 var save_data: Dictionary = {}
 var points: int = 0  # 🔹 Puntos acumulados en el nivel
+var previous_phase_points: int = 0  # 🔹 Puntos obtenidos en la última fase
 @export var enemy_growth_percentage: float = 1.1  # 🔹 Incremento del 10% por defecto
 
 @onready var level_hud = get_tree().get_first_node_in_group("level_hud")
@@ -26,8 +27,24 @@ func initialize_level():
 	phase = SAVE.get_phase()
 	SYSLOG.debug_log("LEVEL_MANAGER: Inicializando nivel en fase %d.", "LEVEL_MANAGER")
 
-	# 🔹 Restablecer puntos de nivel antes de que se muestre
-	points = 0
+	# 🔹 Antes de resetear `points`, guardar los puntos previos para mostrar en `resultado.gd`
+	previous_phase_points = points  
+
+	# 🔹 Resetear puntos SOLO al inicio de cada nivel
+	points = 0  
+
+# 🔹 Notificar al HUD que reinicie la visualización de puntos de fase
+	if level_hud:
+		level_hud.reiniciar_puntos_fase()
+
+	SYSLOG.debug_log("Fase iniciada - Puntos previos: %d | Puntos actuales: %d" % [previous_phase_points, points], "LEVEL_MANAGER")
+
+	# 🔹 Obtener el total de puntos guardados antes de iniciar la fase
+	var selected_savegame_key = SAVE.get_current_savegame_key()
+	if selected_savegame_key != "":
+		points = SAVE.game_data[selected_savegame_key].get("save_points", 0)
+
+	SYSLOG.debug_log("Puntos inicializados: %d | Puntos anteriores: %d" % [points, previous_phase_points], "LEVEL_MANAGER")
 
 	# 🔹 Verificar si el jugador sigue en la escena antes de instanciar uno nuevo
 	var jugadores = get_tree().get_nodes_in_group("pj")
@@ -65,8 +82,46 @@ func initialize_level():
 	await get_tree().process_frame  
 	_actualizar_hud()
 	emit_signal("phase_updated", phase)
+	level_hud.actualizar_phase(phase)
 	SYSLOG.debug_log("Fase iniciada correctamente: %d" % phase, "LEVEL_MANAGER")
 
+# ==========================
+# Incrementar Puntos Durante el Nivel
+# ==========================
+func incrementar_puntos(amount: int) -> void:
+	points += amount
+	_actualizar_hud()
+
+	# 🔹 Guardar puntos en tiempo real
+	guardar_puntos()
+
+	SYSLOG.debug_log("Puntos incrementados en %d. Total: %d" % [amount, points], "LEVEL_MANAGER")
+
+# ==========================
+# Guardar Puntos en Tiempo Real
+# ==========================
+func guardar_puntos() -> void:
+	var selected_savegame_key = SAVE.get_current_savegame_key()
+	if selected_savegame_key == "":
+		SYSLOG.error_log("No se pudo obtener savegame.", "LEVEL_MANAGER")
+		return
+
+	# 🔹 Obtener los puntos actuales almacenados en `save_points`
+	var global_points = SAVE.game_data[selected_savegame_key].get("save_points", 0)
+
+	# 🔹 Calcular la diferencia de puntos obtenidos en esta fase
+	var diferencia_puntos = points - global_points
+
+	# 🔹 Evitar sumas erróneas (asegurar que solo sumamos la diferencia positiva)
+	if diferencia_puntos > 0:
+		SAVE.game_data[selected_savegame_key]["save_points"] += diferencia_puntos
+		SYSLOG.debug_log("Puntos guardados correctamente - Total en save: %d (incremento de %d)" % 
+			[SAVE.game_data[selected_savegame_key]["save_points"], diferencia_puntos], "LEVEL_MANAGER")
+	else:
+		SYSLOG.debug_log("No se detectaron nuevos puntos para guardar.", "LEVEL_MANAGER")
+
+	# 🔹 Guardar los datos actualizados
+	SAVE.save_game()
 
 # ==========================
 # Manejar la Muerte de un Enemigo
@@ -76,9 +131,16 @@ func _on_enemy_defeated(enemy_points: int) -> void:
 		SYSLOG.error_log("ERROR: Se recibió un valor incorrecto en _on_enemy_defeated. Tipo recibido: %s" % typeof(enemy_points), "LEVEL_MANAGER")
 		return  # 🔹 Evitar errores en caso de tipo incorrecto
 
+	# 🔹 Sumar correctamente los puntos del enemigo
 	points += enemy_points
+
+	# 🔹 Guardar puntos correctamente sin reescribir valores
+	guardar_puntos()
+
+	# 🔹 Actualizar el HUD en tiempo real
 	_actualizar_hud()
-	SYSLOG.debug_log("Puntos sumados: %d. Total actual: %d" % [enemy_points, points], "LEVEL_MANAGER")
+
+	SYSLOG.debug_log("Enemigo derrotado. Puntos sumados: %d. Total actual: %d" % [enemy_points, points], "LEVEL_MANAGER")
 
 	# 🔹 Verificar si quedan enemigos en la escena
 	var remaining_enemies = get_tree().get_nodes_in_group("enemy")
@@ -90,6 +152,14 @@ func _on_enemy_defeated(enemy_points: int) -> void:
 # ==========================
 func manejar_resultado(resultado: String):
 	SYSLOG.debug_log("LEVEL_MANAGER: Procesando resultado %s.", "LEVEL_MANAGER")
+
+	# 🔹 Guardar progreso antes de pausar el juego (evita duplicaciones)
+	if resultado == "victoria":
+		guardar_progreso(resultado)
+
+	# 🔹 Esperar un frame antes de pausar para asegurar que los datos se escribieron
+	await get_tree().process_frame  
+
 	get_tree().paused = true
 
 	var resultado_nodo = get_tree().get_nodes_in_group("resultado")
@@ -109,24 +179,29 @@ func guardar_progreso(resultado: String):
 		SYSLOG.error_log("No se pudo obtener el savegame actual.", "LEVEL_MANAGER")
 		return
 
-	# 🔹 Sumar puntos obtenidos en este nivel al total global
-	var global_points = SAVE.game_data[selected_savegame_key].get("save_points", 0)
-	SAVE.game_data[selected_savegame_key]["save_points"] = global_points + points
+	# 🔹 Guardar los puntos en tiempo real antes de actualizar la fase
+	guardar_puntos()
 
-	# 🔹 Actualizar la fase en caso de victoria
+	# 🔹 Si el jugador ganó, avanzar a la siguiente fase
 	if resultado == "victoria":
 		SAVE.game_data[selected_savegame_key][selected_pj_key]["phase"] += 1
 		phase = SAVE.game_data[selected_savegame_key][selected_pj_key]["phase"]
 
+	# 🔹 Guardar los datos actualizados y esperar 1 frame para asegurar que los cambios estén escritos
 	SAVE.save_game()
+	await get_tree().process_frame  
 
-	SYSLOG.debug_log("Puntos guardados: %d (Total: %d)" % [points, global_points + points], "LEVEL_MANAGER")
+	SYSLOG.debug_log("Fase guardada correctamente: %d | Puntos Totales: %d" % 
+		[phase, SAVE.game_data[selected_savegame_key]["save_points"]], "LEVEL_MANAGER")
 
 # ==========================
 # Reinicio de Nivel
 # ==========================
 func reiniciar_nivel():
 	SYSLOG.debug_log("LEVEL_MANAGER: Reiniciando nivel.", "LEVEL_MANAGER")
+
+	# 🔹 Guardar progreso antes de reiniciar
+	guardar_progreso("game_over")
 
 	# 🔹 Ocultar el menú antes de reiniciar
 	var resultado_nodo = get_tree().get_nodes_in_group("resultado")
@@ -143,7 +218,7 @@ func reiniciar_nivel():
 	# 🔹 Limpiar la escena antes de regenerar
 	get_tree().paused = false  
 	limpiar_escena()
-	await get_tree().process_frame  # 🔹 Esperar a que los nodos sean eliminados
+	await get_tree().process_frame  
 
 	# 🔹 Asegurar que la referencia del jugador sea nula antes de reinstanciar
 	player = null  
@@ -156,6 +231,9 @@ func reiniciar_nivel():
 # ==========================
 func reiniciar_desde_phase_1():
 	SYSLOG.debug_log("LEVEL_MANAGER: Reiniciando desde fase 1.", "LEVEL_MANAGER")
+
+	# 🔹 Guardar progreso antes de resetear
+	guardar_progreso("game_over")  # 🔹 SE AÑADE ESTO
 
 	var selected_savegame_key = SAVE.get_current_savegame_key()
 	var selected_pj_key = SAVE.get_current_pj_key()
@@ -238,6 +316,9 @@ func _on_pj_muerto():
 func volver_a_menu():
 	SYSLOG.debug_log("LEVEL_MANAGER: Volviendo al menú principal.", "LEVEL_MANAGER")
 
+	# 🔹 Guardar progreso antes de salir
+	guardar_progreso("game_over")  # 🔹 SE AÑADE ESTO
+
 	# 🔹 Limpiar la escena antes de salir
 	limpiar_escena()
 	await get_tree().process_frame
@@ -253,7 +334,7 @@ func _actualizar_hud() -> void:
 	
 	if level_hud:
 		level_hud.actualizar_puntos(points)
-		level_hud.actualizar_phase(phase)
-		SYSLOG.debug_log("HUD actualizado correctamente - Phase: %d, Puntos: %d" % [phase, points], "LEVEL_MANAGER")
+#		level_hud.actualizar_phase(phase)
+#		SYSLOG.debug_log("HUD actualizado correctamente - Phase: %d, Puntos: %d" % [phase, points], "LEVEL_MANAGER")
 	else:
 		SYSLOG.error_log("HUD sigue sin encontrarse. No se puede actualizar.", "LEVEL_MANAGER")

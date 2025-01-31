@@ -1,7 +1,7 @@
 # ==========================
 # pj_1.gd 
 # ==========================
-class_name class_pj_1 extends CharacterBody2D
+class_name pj_1 extends CharacterBody2D
 
 # ==========================
 # Signals
@@ -89,7 +89,7 @@ func _process(delta: float) -> void:
 	_handle_energy_regeneration(delta)
 	_update_animation()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_dead or is_attacking or is_dashing:
 		return
 

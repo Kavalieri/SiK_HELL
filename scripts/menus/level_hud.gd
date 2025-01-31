@@ -1,7 +1,7 @@
 # ==========================
 # level_hud.gd 
 # ==========================
-class_name class_level_hud extends CanvasLayer
+class_name level_hud extends CanvasLayer
 
 # ==========================
 # Referencias de Nodos del HUD
@@ -56,42 +56,25 @@ func _actualizar_datos_guardado() -> void:
 	SYSLOG.debug_log("HUD cargado - Phase: %d, Level: %d, Points: %d" % [phase, level, points], "LEVEL_HUD")
 
 # ==========================
+# Reiniciar puntos en cada fase
+# ==========================
+func reiniciar_puntos_fase():
+	points = 0  # 🔹 Se resetea para mostrar correctamente la fase actual
+	_actualizar_hud()
+	SYSLOG.debug_log("HUD: Puntos de fase reiniciados a 0.", "LEVEL_HUD")
+
+# ==========================
 # Actualizar la Interfaz del HUD
 # ==========================
 func _actualizar_hud() -> void:
 	if points_label:
-		points_label.text = "Puntos: %d" % points
+		points_label.text = "Puntos Fase: %d" % points  # 🔹 Muestra solo los puntos de la fase actual
 	if phase_label:
 		phase_label.text = "Fase: %d" % phase
 	if level_label:
 		level_label.text = "Nivel: %d" % level
 
-	SYSLOG.debug_log("HUD actualizado - Phase: %d, Level: %d, Points: %d" % [phase, level, points], "LEVEL_HUD")
-
-# ==========================
-# Incrementar Puntos Durante el Nivel
-# ==========================
-func incrementar_puntos(amount: int) -> void:
-	points += amount
-	_actualizar_hud()
-	SYSLOG.debug_log("Puntos incrementados en %d. Total: %d" % [amount, points], "LEVEL_HUD")
-
-# ==========================
-# Guardar Puntos al Terminar el Nivel
-# ==========================
-func guardar_puntos() -> void:
-	var selected_savegame_key = SAVE.get_current_savegame_key()
-	if selected_savegame_key == "":
-		SYSLOG.error_log("No se pudo obtener savegame.", "LEVEL_HUD")
-		return
-
-	# 🔹 Obtener puntos actuales y sumarlos a `save_points`
-	var global_points = SAVE.game_data[selected_savegame_key].get("save_points", 0)
-	SAVE.game_data[selected_savegame_key]["save_points"] = global_points + points
-
-	SAVE.save_game()
-
-	SYSLOG.debug_log("Puntos guardados en archivo - Total en save: %d (sumados %d)" % [global_points + points, points], "LEVEL_HUD")
+	SYSLOG.debug_log("HUD actualizado - Phase: %d, Level: %d, Puntos Fase: %d" % [phase, level, points], "LEVEL_HUD")
 
 # ==========================
 # Actualizar la Fase en el HUD
@@ -100,12 +83,12 @@ func actualizar_phase(new_phase: int) -> void:
 	await get_tree().process_frame  # 🔹 Esperamos 1 frame antes de actualizar la UI
 	
 	phase = new_phase
+	reiniciar_puntos_fase()
 	if phase_label:
 		phase_label.text = "Fase: %d" % phase
-	SYSLOG.debug_log("HUD: Phase actualizada correctamente a %d." % phase, "LEVEL_HUD")
+	SYSLOG.debug_log("HUD: Phase actualizada correctamente a %d.", "LEVEL_HUD")
 
 func actualizar_puntos(nuevos_puntos: int) -> void:
-	points = nuevos_puntos
 	if points_label:
-		points_label.text = "Puntos: %d" % points
-	SYSLOG.debug_log("HUD: Puntos actualizados a %d." % points, "LEVEL_HUD")
+		points_label.text = "Puntos: %d" % nuevos_puntos  # 🔹 Ahora solo muestra puntos, sin gestionarlos
+	SYSLOG.debug_log("HUD: Puntos actualizados a %d." % nuevos_puntos, "LEVEL_HUD")

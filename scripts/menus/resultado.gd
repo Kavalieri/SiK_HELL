@@ -1,7 +1,7 @@
 # ==========================
 # resultado.gd
 # ==========================
-class_name class_resultado extends Control
+class_name resultado extends Control
 
 # ==========================
 # Referencias Internas
@@ -16,7 +16,7 @@ class_name class_resultado extends Control
 func mostrar_resultado(resultado: String):
 	SYSLOG.debug_log("Mostrando resultado para %s.", "RESULT_MANAGER")
 
-	if resultado_label == null:
+	if not resultado_label:
 		SYSLOG.error_log("No se encontró el nodo de texto resultado_label.", "RESULT_MANAGER")
 		return  
 
@@ -27,7 +27,11 @@ func mostrar_resultado(resultado: String):
 
 	get_tree().paused = true  
 
-	# 🔹 Obtener datos de progreso
+	# 🔹 Esperar un frame antes de leer el guardado para asegurar sincronización
+	await get_tree().process_frame  
+	await get_tree().process_frame  
+
+	# 🔹 Obtener datos actualizados después de guardar progreso
 	var save_data = SAVE.load_game()
 	if save_data.is_empty():
 		SYSLOG.error_log("No se pudo cargar el archivo de guardado.", "RESULT_MANAGER")
@@ -35,30 +39,29 @@ func mostrar_resultado(resultado: String):
 
 	var selected_savegame_key = SAVE.get_current_savegame_key()
 	var current_phase = SAVE.get_phase()
-	var next_phase = current_phase if resultado == "game_over" else current_phase + 1
-	var total_points = save_data[selected_savegame_key]["save_points"]
 
-	# 🔹 Obtener cantidad de enemigos en el siguiente nivel
-	var enemies_next_level = LEVEL_MANAGER.get_enemy_count_for_phase()
+	# 🔹 Leer correctamente los puntos guardados en `SAVE.game_data`
+	var total_points = SAVE.game_data[selected_savegame_key].get("save_points", 0)
 
-	# 🔹 Obtener puntos de este nivel desde el HUD
-	var hud = get_tree().get_nodes_in_group("level_hud")[0] if get_tree().get_nodes_in_group("level_hud").size() > 0 else null
-	var level_points = hud.points if hud else 0
+	# 🔹 Obtener los puntos ganados en la última fase desde `LEVEL_MANAGER`
+	var previous_phase_points = LEVEL_MANAGER.previous_phase_points
 
-	LEVEL_MANAGER.guardar_progreso(resultado)
-
+	# 🔹 Mostrar la interfaz con la información correcta
 	if resultado == "victoria":
 		resultado_label.text = "¡VICTORIA!\n\n" + \
-			"Enemigos en el siguiente nivel: %d\n" % enemies_next_level + \
-			"Puntos obtenidos en este nivel: %d\n" % level_points + \
-			"Puntos totales: %d" % total_points
-		continuar_button.text = "Continuar"
+			"Fase siguiente: %d\n" % (current_phase) + \
+			"Enemigos en la siguiente fase: %d\n" % LEVEL_MANAGER.get_enemy_count_for_phase() + \
+			"Puntos obtenidos en esta fase: %d\n" % previous_phase_points + \
+			"Puntos totales acumulados: %d" % total_points
 	else:
 		resultado_label.text = "GAME OVER\n\n" + \
 			"Fase alcanzada: %d\n" % current_phase + \
-			"Puntos obtenidos en este nivel: %d\n" % level_points + \
-			"Puntos totales: %d" % total_points
-		continuar_button.text = "Reintentar"
+			"Puntos obtenidos en esta fase: %d\n" % previous_phase_points + \
+			"Puntos totales acumulados: %d" % total_points
+
+	# 🔹 Log de depuración para confirmar los datos mostrados
+	SYSLOG.debug_log("Resultado mostrado: %s | Puntos Fase: %d | Puntos Totales: %d" % 
+		[resultado, previous_phase_points, total_points], "RESULT_MANAGER")
 
 # ==========================
 # Señales conectadas desde el Inspector

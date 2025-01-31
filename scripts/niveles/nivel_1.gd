@@ -1,7 +1,7 @@
 # ==========================
 # nivel_1.gd
 # ==========================
-class_name class_nivel_1 extends Area2D
+class_name nivel_1 extends Area2D
 
 # ==========================
 # Variables Internas
@@ -35,7 +35,7 @@ func _on_all_enemies_defeated():
 # ==========================
 # Restricción del Movimiento del Jugador
 # ==========================
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var player = get_tree().get_nodes_in_group("pj")[0] if get_tree().get_nodes_in_group("pj").size() > 0 else null
 	if player and limites:
 		_restringir_movimiento(player)

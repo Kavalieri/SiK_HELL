@@ -19,7 +19,7 @@ func _ready() -> void:
 	# Configuración inicial
 	SYSLOG.debug_log("Menú de pausa inicializado.", "PAUSE")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		_toggle_pause()
 

@@ -1,7 +1,7 @@
 # ==========================
 # enemy_1.gd 
 # ==========================
-class_name class_enemy_1 extends CharacterBody2D 
+class_name enemy_1 extends CharacterBody2D 
 
 # ==========================
 # Signals 
@@ -121,14 +121,18 @@ func _morir() -> void:
 	is_dead = true
 	animated_sprite.play("dead")
 
-	# 🔹 Emitir la señal correctamente con el argumento correcto
+	# 🔹 Desactivar la colisión inmediatamente para evitar más impactos
+	collision_shape.set_deferred("disabled", true)
+	SYSLOG.debug_log("Colisión del enemigo desactivada al morir: %s." % self.name, "ENEMY")
+
+	# 🔹 Emitir la señal correctamente con los puntos
 	emit_signal("enemy_defeated", enemy_points)  
 	SYSLOG.debug_log("Enemigo derrotado: %s. Puntos otorgados: %d" % [self.name, enemy_points], "ENEMY")
 
 	# 🔹 Notificar directamente a `LEVEL_MANAGER`
 	var level_manager = get_tree().get_first_node_in_group("level_manager")
 	if level_manager:
-		level_manager._on_enemy_defeated(enemy_points)  # 🔹 Pasar solo los puntos, sin `int()`
+		level_manager._on_enemy_defeated(enemy_points)
 
 	# 🔹 Esperar la animación antes de eliminarlo
 	await animated_sprite.animation_finished
