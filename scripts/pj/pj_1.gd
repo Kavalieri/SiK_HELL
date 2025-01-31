@@ -269,16 +269,21 @@ func _on_attack() -> void:
 # Estados
 # ==========================
 func _morir() -> void:
+	if is_dead:
+		return  # 🔹 Evitar doble ejecución
+
 	is_dead = true
 	animated_sprite.play("dead")
 	SYSLOG.debug_log("pj1 ha muerto.", "PJ1")
 
-	# 🔹 Emitir la señal de muerte del jugador
-	emit_signal("pj_muerto")
+	# 🔹 Emitir la señal de muerte del jugador solo una vez
+	if not is_queued_for_deletion():
+		emit_signal("pj_muerto")
+		SYSLOG.debug_log("Señal 'pj_muerto' emitida.", "PJ1")
 
-	# 🔹 Asegurar que el jugador se elimine correctamente
-	await animated_sprite.animation_finished  # 🔹 Esperar a que termine la animación de muerte
-	queue_free()  # 🔹 Eliminar el nodo del jugador de la escena
+	# 🔹 Esperar la animación antes de eliminar el nodo
+	await animated_sprite.animation_finished  
+	queue_free()  
 
 	SYSLOG.debug_log("pj1 eliminado de la escena tras morir.", "PJ1")
 

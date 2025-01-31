@@ -27,7 +27,7 @@ func mostrar_resultado(resultado: String):
 
 	get_tree().paused = true  
 
-	# Obtener datos de progreso
+	# 🔹 Obtener datos de progreso
 	var save_data = SAVE.load_game()
 	if save_data.is_empty():
 		SYSLOG.error_log("No se pudo cargar el archivo de guardado.", "RESULT_MANAGER")
@@ -38,13 +38,26 @@ func mostrar_resultado(resultado: String):
 	var next_phase = current_phase if resultado == "game_over" else current_phase + 1
 	var total_points = save_data[selected_savegame_key]["save_points"]
 
+	# 🔹 Obtener cantidad de enemigos en el siguiente nivel
+	var enemies_next_level = LEVEL_MANAGER.get_enemy_count_for_phase()
+
+	# 🔹 Obtener puntos de este nivel desde el HUD
+	var hud = get_tree().get_nodes_in_group("level_hud")[0] if get_tree().get_nodes_in_group("level_hud").size() > 0 else null
+	var level_points = hud.points if hud else 0
+
 	LEVEL_MANAGER.guardar_progreso(resultado)
 
 	if resultado == "victoria":
-		resultado_label.text = "¡VICTORIA!\nSiguiente fase: %d\nPuntos totales: %d" % [next_phase, total_points]
+		resultado_label.text = "¡VICTORIA!\n\n" + \
+			"Enemigos en el siguiente nivel: %d\n" % enemies_next_level + \
+			"Puntos obtenidos en este nivel: %d\n" % level_points + \
+			"Puntos totales: %d" % total_points
 		continuar_button.text = "Continuar"
 	else:
-		resultado_label.text = "GAME OVER\nFase alcanzada: %d\nPuntos totales: %d" % [current_phase, total_points]
+		resultado_label.text = "GAME OVER\n\n" + \
+			"Fase alcanzada: %d\n" % current_phase + \
+			"Puntos obtenidos en este nivel: %d\n" % level_points + \
+			"Puntos totales: %d" % total_points
 		continuar_button.text = "Reintentar"
 
 # ==========================

@@ -6,7 +6,7 @@ class_name class_enemy_1 extends CharacterBody2D
 # ==========================
 # Signals 
 # ========================== 
-signal enemy_defeated
+signal enemy_defeated(enemy_points: int)
 
 # ==========================
 # Propiedades Exportadas
@@ -21,6 +21,8 @@ signal enemy_defeated
 @export var defense: float = 0.0
 
 @export var speed: float = 200.0  # Velocidad base
+
+@export var enemy_points: int = 1  # 🔹 Puntos que otorga este enemigo al morir
 
 # ==========================
 # Variables Internas
@@ -113,10 +115,23 @@ func _actualizar_animacion() -> void:
 # Estados
 # ==========================
 func _morir() -> void:
+	if is_dead:
+		return  # 🔹 Evitar doble ejecución
+
 	is_dead = true
 	animated_sprite.play("dead")
-	emit_signal("enemy_defeated")
-	SYSLOG.debug_log("El enemigo ha muerto, señal emitida.", "ENEMY")
+
+	# 🔹 Emitir la señal correctamente con el argumento correcto
+	emit_signal("enemy_defeated", enemy_points)  
+	SYSLOG.debug_log("Enemigo derrotado: %s. Puntos otorgados: %d" % [self.name, enemy_points], "ENEMY")
+
+	# 🔹 Notificar directamente a `LEVEL_MANAGER`
+	var level_manager = get_tree().get_first_node_in_group("level_manager")
+	if level_manager:
+		level_manager._on_enemy_defeated(enemy_points)  # 🔹 Pasar solo los puntos, sin `int()`
+
+	# 🔹 Esperar la animación antes de eliminarlo
+	await animated_sprite.animation_finished
 	queue_free()
 
 func set_health(nueva_salud: int) -> void:

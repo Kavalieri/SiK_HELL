@@ -2,6 +2,9 @@
 # COMBAT.gd
 # ==========================
 class_name class_COMBAT extends Node
+# ==========================
+# Signals
+# ==========================
 
 # ==========================
 # Configuración del Pool de Proyectiles
@@ -234,7 +237,7 @@ func _ocultar_damage_label(damage_label: Label) -> void:
 		damage_label.visible = false
 
 # ==========================
-# Manejador de Muerte
+# Manejador de Muerte del Enemigo
 # ==========================
 func morir(objetivo: Node) -> void:
 	if objetivo.has_method("_morir"):

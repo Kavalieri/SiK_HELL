@@ -25,6 +25,7 @@ signal all_enemies_defeated
 # ==========================
 # Variables Internas
 # ==========================
+var enemies_alive: int = 0  # 🔹 Contador de enemigos vivos
 var enemies = []
 var phase: int = 1  # Se actualizará desde `nivel_X.gd`
 var enemy_spawn_areas = []  # Lista de todas las zonas de spawn
@@ -70,6 +71,9 @@ func configure_spawner():
 # Generación de Enemigos Basada en `phase`
 # ==========================
 func spawn_enemies():
+	enemies.clear()
+	enemies_alive = 0  # 🔹 Resetear contador
+	
 	var max_enemies = LEVEL_MANAGER.get_enemy_count_for_phase()
 	SYSLOG.debug_log("Generando %d enemigos..." % max_enemies, "ENEMY_SPAWNER")
 
@@ -81,11 +85,14 @@ func spawn_enemies():
 		get_tree().current_scene.add_child(enemy)
 		enemies.append(enemy)
 
-		# 🔹 Conectar la señal de muerte del enemigo
+		# 🔹 Conectar señal de muerte del enemigo
 		if not enemy.is_connected("enemy_defeated", Callable(self, "_on_enemy_defeated")):
-			enemy.connect("enemy_defeated", Callable(self, "_on_enemy_defeated").bind(enemy))
+			enemy.connect("enemy_defeated", Callable(self, "_on_enemy_defeated"))
 
-	SYSLOG.debug_log("Enemigos generados correctamente.", "ENEMY_SPAWNER")
+		# 🔹 Aumentar contador de enemigos vivos
+		enemies_alive += 1
+
+	SYSLOG.debug_log("Enemigos generados correctamente. Total enemigos: %d" % enemies_alive, "ENEMY_SPAWNER")
 	
 # ==========================
 # Generar Posición Aleatoria de Enemigos en Múltiples Áreas sin `shape`
@@ -117,16 +124,16 @@ func _generar_posicion_enemigo() -> Vector2:
 # ==========================
 # Manejo de Enemigos Derrotados
 # ==========================
-func _on_enemy_defeated(enemy: Node) -> void:
-	SYSLOG.debug_log("ENEMY_SPAWNER: Enemigo derrotado: %s" % enemy.name, "ENEMY_SPAWNER")
+func _on_enemy_defeated(enemy_points: int) -> void:
+	SYSLOG.debug_log("ENEMY_SPAWNER: Enemigo derrotado. Puntos otorgados: %d" % enemy_points, "ENEMY_SPAWNER")
 
-	# Remover enemigo de la lista
-	if enemy in enemies:
-		enemies.erase(enemy)
+	# 🔹 Restar al contador de enemigos vivos
+	enemies_alive -= 1  
+	SYSLOG.debug_log("Enemigos restantes: %d" % enemies_alive, "ENEMY_SPAWNER")
 
-	# Si no quedan enemigos, emitir la señal de victoria
-	if enemies.size() == 0:
-		SYSLOG.debug_log("Todos los enemigos han sido eliminados. Emitiendo all_enemies_defeated.", "ENEMY_SPAWNER")
+	# 🔹 Verificar si todos los enemigos han sido derrotados
+	if enemies_alive <= 0:
+		SYSLOG.debug_log("Todos los enemigos eliminados. Emitiendo all_enemies_defeated.", "ENEMY_SPAWNER")
 		emit_signal("all_enemies_defeated")
 
 # ==========================

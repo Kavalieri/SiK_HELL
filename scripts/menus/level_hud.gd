@@ -22,6 +22,7 @@ var save_data: Dictionary = {}
 # Inicialización
 # ==========================
 func _ready() -> void:
+	add_to_group("level_hud")
 	SYSLOG.debug_log("Inicializando HUD.", "LEVEL_HUD")
 	_actualizar_datos_guardado()
 	_actualizar_hud()
@@ -95,8 +96,16 @@ func guardar_puntos() -> void:
 # ==========================
 # Actualizar la Fase en el HUD
 # ==========================
-func _actualizar_phase(new_phase: int) -> void:
+func actualizar_phase(new_phase: int) -> void:
+	await get_tree().process_frame  # 🔹 Esperamos 1 frame antes de actualizar la UI
+	
 	phase = new_phase
-	_actualizar_hud()
+	if phase_label:
+		phase_label.text = "Fase: %d" % phase
+	SYSLOG.debug_log("HUD: Phase actualizada correctamente a %d." % phase, "LEVEL_HUD")
 
-	SYSLOG.debug_log("HUD actualizado - Nueva Phase: %d después de iniciar el nivel" % phase, "LEVEL_HUD")
+func actualizar_puntos(nuevos_puntos: int) -> void:
+	points = nuevos_puntos
+	if points_label:
+		points_label.text = "Puntos: %d" % points
+	SYSLOG.debug_log("HUD: Puntos actualizados a %d." % points, "LEVEL_HUD")
