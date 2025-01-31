@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dagnjxg2qx6uu"]
+
+[ext_resource type="Script" path="res://scripts/systems/STATS_MODIFIER.gd" id="1_suyb7"]
+
+[node name="STATS_MODIFIER" type="Node"]
+script = ExtResource("1_suyb7")

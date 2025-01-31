@@ -81,57 +81,57 @@ func deactivate_projectile(projectile: Node) -> void:
 # ==========================
 func pj_attack_damage(proyectil: Node, objetivo: Node) -> void:
 	if not proyectil or not objetivo:
-		SYSLOG.error_log("Proyectil o objetivo no válido para el cálculo de daño. %s %s %s " % [proyectil.name, objetivo.name], "COMBAT")
+		SYSLOG.error_log("Proyectil o objetivo no válido para el cálculo de daño.", "COMBAT")
 		return
 
 	SYSLOG.debug_log("Iniciando cálculo de daño. Proyectil: %s, Objetivo: %s" % [proyectil.name, objetivo.name], "COMBAT")
 
-	# Obtener estadísticas del proyectil
-	var proyectil_damage = proyectil.damage if "damage" in proyectil else 0
-	var proyectil_precision = proyectil.precision if "precision" in proyectil else 0
-	var proyectil_crit = proyectil.crit if "crit" in proyectil else 0
-	SYSLOG.debug_log("Proyectil - Daño: %d, Precisión: %d, Crítico: %d" %
-		[proyectil_damage, proyectil_precision, proyectil_crit], "COMBAT")
+	# 🔹 Obtener estadísticas modificadas del proyectil
+	var proyectil_damage = STATS_MODIFIER.modificar_stat(proyectil.damage, "damage")
+	var proyectil_precision = STATS_MODIFIER.modificar_stat(proyectil.precision, "precision")
+	var proyectil_crit = STATS_MODIFIER.modificar_stat(proyectil.crit, "crit")
 
-	# Obtener estadísticas del lanzador
+	# 🔹 Obtener estadísticas modificadas del lanzador
 	var pj = proyectil.lanzador if "lanzador" in proyectil else null
 	if not pj:
-		var lanzador_name = proyectil.lanzador.name if proyectil.lanzador and "name" in proyectil.lanzador else "desconocido"
-		var proyectil_name = proyectil.name if proyectil and "name" in proyectil else "desconocido"
-		SYSLOG.error_log("No se encontró el lanzador del proyectil %s. Nombre del proyectil: %s" % [lanzador_name, proyectil_name], "COMBAT")
+		SYSLOG.error_log("No se encontró el lanzador del proyectil.", "COMBAT")
 		return
 
-	var pj_damage = pj.damage if "damage" in pj else 0
-	var pj_precision = pj.precision if "precision" in pj else 0
-	var pj_crit = pj.crit if "crit" in pj else 0
-	SYSLOG.debug_log("Lanzador - Daño: %d, Precisión: %d, Crítico: %d" %
-		[pj_damage, pj_precision, pj_crit], "COMBAT")
+	var pj_damage = STATS_MODIFIER.modificar_stat(pj.damage, "damage")
+	var pj_precision = STATS_MODIFIER.modificar_stat(pj.precision, "precision")
+	var pj_crit = STATS_MODIFIER.modificar_stat(pj.crit, "crit")
 
-	# Combinar estadísticas y calcular daño
+	# 🔹 Obtener estadísticas modificadas del objetivo
+	var objetivo_dodge = STATS_MODIFIER.modificar_stat(objetivo.dodge, "dodge")
+	var objetivo_defense = STATS_MODIFIER.modificar_stat(objetivo.defense, "defense")
+
+	# 🔹 Combinar estadísticas y calcular daño
 	var damage_base = proyectil_damage + pj_damage
 	var precision_total = proyectil_precision + pj_precision
 	var crit_total = proyectil_crit + pj_crit
 
-	# Verificar esquiva del objetivo
-	var is_dodge = randf() * 100 < objetivo.dodge and randf() * 100 >= precision_total
-	SYSLOG.debug_log("Esquiva - Dodge del objetivo: %d, Precisión total del ataque: %d, Resultado: %s" %
-		[objetivo.dodge, precision_total, str(is_dodge)], "COMBAT")
+	# 🔹 Verificar esquiva del objetivo
+	var is_dodge = randf() * 100 < objetivo_dodge and randf() * 100 >= precision_total
+	SYSLOG.debug_log("Esquiva - Dodge del objetivo: %d, Precisión total del ataque: %d, Resultado: %s" % 
+		[objetivo_dodge, precision_total, str(is_dodge)], "COMBAT")
+
 	if is_dodge:
 		SYSLOG.debug_log("%s esquivó el ataque de %s." % [objetivo.name, proyectil.name], "COMBAT")
 		actualizar_enemy_damage_label(objetivo, 0)
 		actualizar_pj_damage_label(objetivo, 0)
 		return
 
-	# Calcular daño crítico
+	# 🔹 Calcular daño crítico
 	var is_crit = randf() * 100 < crit_total
 	var total_damage = damage_base * 2 if is_crit else damage_base
-	SYSLOG.debug_log("Crítico - Probabilidad: %d, Resultado: %s, Daño crítico: %d" % [crit_total, str(is_crit), total_damage], "COMBAT")
+	SYSLOG.debug_log("Crítico - Probabilidad: %d, Resultado: %s, Daño crítico: %d" % 
+		[crit_total, str(is_crit), total_damage], "COMBAT")
 
-	# Aplicar defensa
-	var final_damage = max(0, total_damage - objetivo.defense)
-	SYSLOG.debug_log("Defensa del objetivo: %d, Daño final aplicado: %d" % [objetivo.defense, final_damage], "COMBAT")
+	# 🔹 Aplicar defensa con modificador
+	var final_damage = max(0, total_damage - objetivo_defense)
+	SYSLOG.debug_log("Defensa del objetivo: %d, Daño final aplicado: %d" % [objetivo_defense, final_damage], "COMBAT")
 
-	# Aplicar daño al objetivo
+	# 🔹 Aplicar daño al objetivo
 	recibir_dano(objetivo, final_damage, 0, proyectil)
 	SYSLOG.debug_log("%s recibió un ataque de %s. Daño final aplicado: %d" % [objetivo.name, proyectil.name, final_damage], "COMBAT")
 
@@ -140,20 +140,24 @@ func pj_attack_damage(proyectil: Node, objetivo: Node) -> void:
 # ==========================
 func enemy_attack_damage(origen: Node, objetivo: Node) -> void:
 	# Verificar si el jugador puede esquivar
-	if randf() * 100 < objetivo.dodge and randf() * 100 >= origen.precision:
+	var is_dodge = randf() * 100 < STATS_MODIFIER.modificar_stat(objetivo.dodge, "dodge") and randf() * 100 >= STATS_MODIFIER.modificar_stat(origen.precision, "precision")
+	if is_dodge:
 		SYSLOG.debug_log("El ataque de %s fue esquivado por %s." % [origen.name, objetivo.name], "COMBAT")
-		actualizar_enemy_damage_label(objetivo, 0)  # Mostrar "fallo" como 0
+		actualizar_enemy_damage_label(objetivo, 0)
 		actualizar_pj_damage_label(objetivo, 0)
 		return
 
-	# Calcular daño base del enemigo
-	var total_damage = origen.damage
-	if randf() * 100 < origen.crit:
+	# Calcular daño base del enemigo con modificador de stats
+	var total_damage = STATS_MODIFIER.modificar_stat(origen.damage, "damage")
+
+	# Calcular golpe crítico con modificador
+	var is_crit = randf() * 100 < STATS_MODIFIER.modificar_stat(origen.crit, "crit")
+	if is_crit:
 		total_damage *= 2  # Aplicar golpe crítico
 		SYSLOG.debug_log("¡Golpe crítico! Daño final de %s: %d." % [origen.name, total_damage], "COMBAT")
 
-	# Aplicar defensa del jugador
-	var final_damage = max(0, total_damage - objetivo.defense)
+	# Aplicar defensa del jugador con modificador
+	var final_damage = max(0, total_damage - STATS_MODIFIER.modificar_stat(objetivo.defense, "defense"))
 
 	# Aplicar daño y actualizar la salud del jugador
 	recibir_dano(objetivo, final_damage, 0, origen)

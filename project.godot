@@ -25,6 +25,7 @@ ENEMY_SPAWNER="*res://scripts/systems/ENEMY_SPAWNER.gd"
 PLAYER_MANAGER="*res://scripts/systems/PLAYER_MANAGER.gd"
 LEVEL_MANAGER="*res://scripts/systems/LEVEL_MANAGER.gd"
 CONFIRM="*res://scripts/systems/CONFIRM.gd"
+STATS_MODIFIER="*res://scripts/systems/STATS_MODIFIER.gd"
 
 [display]
 
