@@ -28,6 +28,15 @@ func initialize_level():
 	phase = SAVE.get_phase()
 	SYSLOG.debug_log("LEVEL_MANAGER: Inicializando nivel en fase %d.", "LEVEL_MANAGER")
 
+	# 🔹 Buscar `level_hud` en tiempo real antes de usarlo
+	level_hud = get_tree().get_first_node_in_group("level_hud")
+
+	# 🔹 Evitar que `level_hud` sea nulo antes de llamarlo
+	if level_hud:
+		level_hud.reiniciar_puntos_fase()
+	else:
+		SYSLOG.error_log("No se encontró level_hud al iniciar el nivel.", "LEVEL_MANAGER")
+
 	# 🔹 Antes de resetear `points`, guardar los puntos previos para mostrar en `resultado.gd`
 	previous_phase_points = points  
 
@@ -38,10 +47,6 @@ func initialize_level():
 	var selected_savegame_key = SAVE.get_current_savegame_key()
 	if selected_savegame_key != "":
 		save_points = SAVE.game_data[selected_savegame_key].get("save_points", 0)
-
-	# 🔹 Notificar al HUD que reinicie los puntos de fase
-	if level_hud:
-		level_hud.reiniciar_puntos_fase()
 
 	SYSLOG.debug_log("Fase iniciada - Puntos previos: %d | Puntos actuales: %d | Puntos totales: %d" % 
 		[previous_phase_points, points, save_points], "LEVEL_MANAGER")
@@ -82,7 +87,13 @@ func initialize_level():
 	await get_tree().process_frame  
 	_actualizar_hud()
 	emit_signal("phase_updated", phase)
-	level_hud.actualizar_phase(phase)
+
+	# 🔹 Evitar que `level_hud` sea nulo antes de llamarlo
+	if level_hud:
+		level_hud.actualizar_phase(phase)
+	else:
+		SYSLOG.error_log("No se encontró level_hud después de la actualización de fase.", "LEVEL_MANAGER")
+
 	SYSLOG.debug_log("Fase iniciada correctamente: %d" % phase, "LEVEL_MANAGER")
 
 # ==========================
