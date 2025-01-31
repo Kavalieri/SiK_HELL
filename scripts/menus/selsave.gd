@@ -1,7 +1,7 @@
 # ==========================
 # selsave.gd 
 # ==========================
-class_name class_selsave_menu extends Control
+class_name selsave_menu extends Control
 
 # ==========================
 # Signals
@@ -80,22 +80,40 @@ func _actualizar_labels() -> void:
 # ==========================
 # Borrar Datos del Savegame
 # ==========================
-# ==========================
-# Borrar Datos del Savegame
-# ==========================
+#func _on_borrar_pressed() -> void:
+	## Determinar cuál savegame está seleccionado
+	#var selected_save = save_data.get("savegame_value", 1)
+	#
+	## Restaurar el savegame usando la función centralizada en SAVE.gd
+	#if SAVE.restore_savegame(selected_save):
+		#SAVE.save_game(false)  # Guardar sin actualizar la marca de tiempo
+		#_cargar_datos_guardado()
+		#_actualizar_labels()
+		#SYSLOG.debug_log("Savegame '%s' restaurado correctamente." % ("savegame%d" % selected_save), "SELSAVE")
+	#else:
+		#SYSLOG.error_log("No se pudo restaurar el savegame '%s'." % ("savegame%d" % selected_save), "SELSAVE")
+
 func _on_borrar_pressed() -> void:
-	# Determinar cuál savegame está seleccionado
+	CONFIRM.mostrar_confirmacion(
+		"¿Seguro que quieres restaurar los puntos?",
+		func(): _reset_stats(),  # 🔹 Llama a la función que ejecutará la restauración del savegame
+		func(): SYSLOG.debug_log("El jugador canceló la restauración de puntos.", "CONFIRM")
+	)
+
+func _reset_stats() -> void:
+	SYSLOG.debug_log("Restaurando los puntos del savegame seleccionado...", "SELSAVE")
+
+	# 🔹 Determinar el savegame seleccionado
 	var selected_save = save_data.get("savegame_value", 1)
-	
-	# Restaurar el savegame usando la función centralizada en SAVE.gd
+
+	# 🔹 Restaurar el savegame utilizando la función centralizada en SAVE.gd
 	if SAVE.restore_savegame(selected_save):
-		SAVE.save_game(false)  # Guardar sin actualizar la marca de tiempo
+		SAVE.save_game(false)  # 🔹 Guardar sin actualizar la marca de tiempo
 		_cargar_datos_guardado()
 		_actualizar_labels()
 		SYSLOG.debug_log("Savegame '%s' restaurado correctamente." % ("savegame%d" % selected_save), "SELSAVE")
 	else:
 		SYSLOG.error_log("No se pudo restaurar el savegame '%s'." % ("savegame%d" % selected_save), "SELSAVE")
-
 
 # ==========================
 # Gestión de Botones

@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlhv748mtj8xr"]
+
+[ext_resource type="Script" path="res://scripts/systems/CONFIRM.gd" id="1_okecb"]
+
+[node name="CONFIRM" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_okecb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 301.0
+offset_right = 1606.0
+offset_bottom = 803.0
+color = Color(0.494118, 0.32549, 0.180392, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 451.0
+offset_top = 517.0
+offset_right = 1472.0
+offset_bottom = 726.0
+theme_override_constants/separation = 40
+alignment = 2
+
+[node name="mensaje" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="si" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "Si"
+
+[node name="no" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "No"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/si" to="." method="_on_si_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/no" to="." method="_on_no_pressed"]

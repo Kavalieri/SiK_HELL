@@ -1,7 +1,7 @@
 # ==========================
 # mejoras.gd 
 # ==========================
-class_name class_mejoras_menu extends Control
+class_name mejoras_menu extends Control
 
 # ==========================
 # Variables Internas
@@ -182,7 +182,11 @@ func _on_dodge_up_pressed() -> void:
 	_modificar_stat("mod_dodge", 1)
 
 func _on_reset_pressed() -> void:
-	_reset_stats()
+	CONFIRM.mostrar_confirmacion(
+		"¿Seguro que quieres restaurar los puntos?",
+		func(): _reset_stats(),
+		func(): SYSLOG.debug_log("El jugador canceló la salida.", "CONFIRM")
+	)
 
 func _on_aceptar_pressed() -> void:
 	_guardar_cambios()

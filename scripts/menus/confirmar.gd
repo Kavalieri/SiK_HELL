@@ -1,7 +1,7 @@
 # ==========================
 # confirmar.gd 
 # ==========================
-class_name class_confirmar_menu extends Control
+class_name confirmar_menu extends Control
 
 # ==========================
 # Buttons

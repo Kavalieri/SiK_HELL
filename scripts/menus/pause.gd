@@ -72,22 +72,26 @@ func _cerrar_opciones() -> void:
 
 func _on_salir_pressed() -> void:
 	_set_pause_menu_visible(false)
-
-	if not confirm_scene:
-		SYSLOG.error_log("La escena de confirmación no está configurada.", "PAUSE")
-		return
-
-	confirm_instance = confirm_scene.instantiate()
-	add_child(confirm_instance)
-	SYSLOG.debug_log("Menú de confirmación cargado en primer plano.", "PAUSE")
-
-	var yes_button = confirm_instance.get_node("botones/si")
-	var no_button = confirm_instance.get_node("botones/no")
-
-	if yes_button:
-		yes_button.connect("pressed", Callable(self, "_confirmar_salir"))
-	if no_button:
-		no_button.connect("pressed", Callable(self, "_volver_a_pausa"))
+	CONFIRM.mostrar_confirmacion(
+		"¿Seguro que quieres salir al menú principal?",
+		func(): get_tree().change_scene_to_file("res://scenes/menus/mainmenu.tscn"),
+		func(): SYSLOG.debug_log("El jugador canceló la salida.", "CONFIRM")
+	)
+	#if not confirm_scene:
+		#SYSLOG.error_log("La escena de confirmación no está configurada.", "PAUSE")
+		#return
+#
+	#confirm_instance = confirm_scene.instantiate()
+	#add_child(confirm_instance)
+	#SYSLOG.debug_log("Menú de confirmación cargado en primer plano.", "PAUSE")
+#
+	#var yes_button = confirm_instance.get_node("botones/si")
+	#var no_button = confirm_instance.get_node("botones/no")
+#
+	#if yes_button:
+		#yes_button.connect("pressed", Callable(self, "_confirmar_salir"))
+	#if no_button:
+		#no_button.connect("pressed", Callable(self, "_volver_a_pausa"))
 
 func _confirmar_salir() -> void:
 	if get_tree() and is_instance_valid(self):
