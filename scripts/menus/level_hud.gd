@@ -68,7 +68,7 @@ func reiniciar_puntos_fase():
 # ==========================
 func _actualizar_hud() -> void:
 	if points_label:
-		points_label.text = "Puntos Fase: %d" % points  # 🔹 Muestra solo los puntos de la fase actual
+		points_label.text = "Puntos: %d" % points  # 🔹 Muestra solo los puntos de la fase actual
 	if phase_label:
 		phase_label.text = "Fase: %d" % phase
 	if level_label:

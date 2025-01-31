@@ -51,12 +51,13 @@ func mostrar_resultado(resultado: String):
 		resultado_label.text = "¡VICTORIA!\n\n" + \
 			"Fase siguiente: %d\n" % (current_phase) + \
 			"Enemigos en la siguiente fase: %d\n" % LEVEL_MANAGER.get_enemy_count_for_phase() + \
-			"Puntos obtenidos en esta fase: %d\n" % previous_phase_points + \
+#			"Puntos obtenidos en esta fase: %d\n" % previous_phase_points + \
 			"Puntos totales acumulados: %d" % total_points
 	else:
 		resultado_label.text = "GAME OVER\n\n" + \
 			"Fase alcanzada: %d\n" % current_phase + \
-			"Puntos obtenidos en esta fase: %d\n" % previous_phase_points + \
+			"Enemigos en la siguiente fase: %d\n" % LEVEL_MANAGER.get_enemy_count_for_phase() + \
+#			"Puntos obtenidos en esta fase: %d\n" % previous_phase_points + \
 			"Puntos totales acumulados: %d" % total_points
 
 	# 🔹 Log de depuración para confirmar los datos mostrados
