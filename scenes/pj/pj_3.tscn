@@ -1,7 +1,6 @@
-[gd_scene load_steps=57 format=3 uid="uid://bpnak7e5xpakt"]
+[gd_scene load_steps=56 format=3 uid="uid://bpnak7e5xpakt"]
 
-[ext_resource type="Script" path="res://scripts/pj/pj_1.gd" id="1_awlnx"]
-[ext_resource type="PackedScene" uid="uid://bdw70lq3nvboh" path="res://scenes/attack/projectile_1.tscn" id="2_qmq8r"]
+[ext_resource type="Script" path="res://scripts/pj/pj_3.gd" id="1_c1eyg"]
 [ext_resource type="Texture2D" uid="uid://bkweb1p1jqnrk" path="res://assets/characters/robot/Shoot (1).png" id="3_7b834"]
 [ext_resource type="Texture2D" uid="uid://cd3qcn7m42rkm" path="res://assets/characters/robot/Shoot (2).png" id="4_utjt5"]
 [ext_resource type="Texture2D" uid="uid://7x16fb7gxhd5" path="res://assets/characters/robot/Shoot (3).png" id="5_xmu34"]
@@ -281,12 +280,9 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="pj_1" type="CharacterBody2D"]
+[node name="pj_3" type="CharacterBody2D"]
 collision_mask = 4
-script = ExtResource("1_awlnx")
-projectile_scene = ExtResource("2_qmq8r")
-dash_distance = 300.0
-dash_speed = 800.0
+script = ExtResource("1_c1eyg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -28)

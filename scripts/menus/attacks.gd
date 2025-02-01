@@ -17,19 +17,19 @@ func _ready() -> void:
 # Buttons
 # ==========================
 func _on_attack1_pressed() -> void:
-	var selected_attack = "projectile_1"
+	var selected_attack = "attack_1"
 	emit_signal("attack", selected_attack)
 	SYSLOG.debug_log("Ataque 1 Seleccionado, señal emitida", "ATTACKS")
 
 
 func _on_attack2_pressed() -> void:
-	var selected_attack = "projectile_2"
+	var selected_attack = "attack_2"
 	emit_signal("attack", selected_attack)
 	SYSLOG.debug_log("Ataque 2 Seleccionado, señal emitida", "ATTACKS")
 
 
 func _on_attack3_pressed() -> void:
-	var selected_attack = "melee_1"
+	var selected_attack = "attack_3"
 	emit_signal("attack", selected_attack)
 	SYSLOG.debug_log("Ataque 3 Seleccionado, señal emitida", "ATTACKS")
 

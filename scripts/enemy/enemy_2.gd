@@ -1,7 +1,7 @@
 # ==========================
-# enemy_1.gd 
+# enemy_2.gd 
 # ==========================
-class_name enemy_1_c extends CharacterBody2D 
+class_name enemy_2 extends CharacterBody2D 
 
 # ==========================
 # Signals 

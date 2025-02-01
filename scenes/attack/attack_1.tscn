@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bdw70lq3nvboh"]
 
-[ext_resource type="Script" path="res://scripts/attack/projectile_1.gd" id="1_201g4"]
+[ext_resource type="Script" path="res://scripts/attack/attack_1.gd" id="1_201g4"]
 [ext_resource type="Texture2D" uid="uid://bvt2ko0fmgxqc" path="res://assets/objects/projectile/Explosion_1.png" id="2_el2u6"]
 [ext_resource type="Texture2D" uid="uid://ubsoklb8masm" path="res://assets/objects/projectile/Explosion_2.png" id="3_7wec6"]
 [ext_resource type="Texture2D" uid="uid://1ys4kabg5xd2" path="res://assets/objects/projectile/Explosion_3.png" id="4_unfhd"]
@@ -53,7 +53,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6noe"]
 radius = 22.0
 
-[node name="proyectil_1" type="Area2D"]
+[node name="attack_1" type="Area2D"]
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("1_201g4")

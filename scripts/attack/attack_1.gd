@@ -1,7 +1,7 @@
 # ==========================
 # projectile_1.gd 
 # ==========================
-class_name projectile_1 extends Area2D
+class_name attack_1 extends Area2D
 
 # ==========================
 # Propiedades Exportadas

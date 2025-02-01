@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bnikikwsl70aw"]
 
-[ext_resource type="Script" path="res://scripts/attack/projectile_1.gd" id="1_t4khp"]
+[ext_resource type="Script" path="res://scripts/attack/attack_2.gd" id="1_xyi8l"]
 [ext_resource type="Texture2D" uid="uid://bvt2ko0fmgxqc" path="res://assets/objects/projectile/Explosion_1.png" id="2_5xb2u"]
 [ext_resource type="Texture2D" uid="uid://ubsoklb8masm" path="res://assets/objects/projectile/Explosion_2.png" id="3_qqawb"]
 [ext_resource type="Texture2D" uid="uid://1ys4kabg5xd2" path="res://assets/objects/projectile/Explosion_3.png" id="4_fy5u6"]
@@ -53,12 +53,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6noe"]
 radius = 22.0
 
-[node name="proyectil_1" type="Area2D"]
+[node name="attack_2" type="Area2D"]
 collision_layer = 2
 collision_mask = 12
-script = ExtResource("1_t4khp")
-distance = 200.0
-rotation_speed = 10.645
+script = ExtResource("1_xyi8l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 1.5708

@@ -18,7 +18,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["projectile_1"]
+			"attack_value": ["attack_1"]
 		},
 		"pj_2": {
 			"level": 1,
@@ -33,7 +33,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["projectile_2"]
+			"attack_value": ["attack_1"]
 		},
 		"pj_3": {
 			"level": 1,
@@ -48,7 +48,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["melee_1"]
+			"attack_value": ["attack_1"]
 		}
 	},
 	"savegame2": {
@@ -68,7 +68,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["projectile_1"]
+			"attack_value": ["attack_1"]
 		},
 		"pj_2": {
 			"level": 1,
@@ -83,7 +83,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["projectile_2"]
+			"attack_value": ["attack_1"]
 		},
 		"pj_3": {
 			"level": 1,
@@ -98,7 +98,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["melee_1"]
+			"attack_value": ["attack_1"]
 		}
 	},
 	"savegame3": {
@@ -118,7 +118,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["projectile_1"]
+			"attack_value": ["attack_1"]
 		},
 		"pj_2": {
 			"level": 1,
@@ -133,7 +133,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["projectile_2"]
+			"attack_value": ["attack_1"]
 		},
 		"pj_3": {
 			"level": 1,
@@ -148,7 +148,7 @@
 			"mod_crit": 0,
 			"mod_precision": 0,
 			"mod_dodge": 0,
-			"attack_value": ["melee_1"]
+			"attack_value": ["attack_1"]
 		}
 	}
 }

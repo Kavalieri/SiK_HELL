@@ -1,7 +1,6 @@
-[gd_scene load_steps=80 format=3 uid="uid://bq7jtuugsujdr"]
+[gd_scene load_steps=79 format=3 uid="uid://bq7jtuugsujdr"]
 
-[ext_resource type="Script" path="res://scripts/pj/pj_1.gd" id="1_jhrxb"]
-[ext_resource type="PackedScene" uid="uid://bdw70lq3nvboh" path="res://scenes/attack/projectile_1.tscn" id="2_5ae4x"]
+[ext_resource type="Script" path="res://scripts/pj/pj_2.gd" id="1_55a3p"]
 [ext_resource type="Texture2D" uid="uid://beqsin77leolf" path="res://assets/characters/guerrero/attack/Attack (1).png" id="3_emmh4"]
 [ext_resource type="Texture2D" uid="uid://bs3y3ly5q4bb7" path="res://assets/characters/guerrero/attack/Attack (2).png" id="4_lqudb"]
 [ext_resource type="Texture2D" uid="uid://dwdp0d8wqy6jt" path="res://assets/characters/guerrero/attack/Attack (3).png" id="5_45ci1"]
@@ -349,12 +348,9 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="pj_1" type="CharacterBody2D"]
+[node name="pj_2" type="CharacterBody2D"]
 collision_mask = 4
-script = ExtResource("1_jhrxb")
-projectile_scene = ExtResource("2_5ae4x")
-dash_distance = 300.0
-dash_speed = 800.0
+script = ExtResource("1_55a3p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -28)

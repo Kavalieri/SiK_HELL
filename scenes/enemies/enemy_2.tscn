@@ -1,6 +1,6 @@
 [gd_scene load_steps=49 format=3 uid="uid://dw3j74r5a2i62"]
 
-[ext_resource type="Script" path="res://scripts/enemy/enemy_1.gd" id="1_uac4v"]
+[ext_resource type="Script" path="res://scripts/enemy/enemy_2.gd" id="1_juhtl"]
 [ext_resource type="Texture2D" uid="uid://dctix87x7jrj6" path="res://assets/characters/zombiemale/Attack (1).png" id="2_angj2"]
 [ext_resource type="Texture2D" uid="uid://b8homk881yodo" path="res://assets/characters/zombiemale/Attack (2).png" id="3_6v8qp"]
 [ext_resource type="Texture2D" uid="uid://c4cc36yly0nt5" path="res://assets/characters/zombiemale/Attack (3).png" id="4_1xg66"]
@@ -209,10 +209,10 @@ animations = [{
 radius = 43.0
 height = 138.0
 
-[node name="enemy_1" type="CharacterBody2D"]
+[node name="enemy_2" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 5
-script = ExtResource("1_uac4v")
+script = ExtResource("1_juhtl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -28)

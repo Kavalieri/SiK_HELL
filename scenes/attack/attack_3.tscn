@@ -1,17 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://mh6udmvhvsn5"]
 
-[ext_resource type="Script" path="res://scripts/attack/projectile_1.gd" id="1_n6td0"]
+[ext_resource type="Script" path="res://scripts/attack/attack_3.gd" id="1_vtrdd"]
 [ext_resource type="Texture2D" uid="uid://61a2r6oi66i8" path="res://assets/objects/proyectiles/aranazo.png" id="2_swymv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6noe"]
 radius = 22.0
 
-[node name="proyectil_1" type="Area2D"]
+[node name="attack_3" type="Area2D"]
 collision_layer = 2
 collision_mask = 12
-script = ExtResource("1_n6td0")
-speed = 500.0
-max_hits = 5
+script = ExtResource("1_vtrdd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.0168129, 0.0168129)

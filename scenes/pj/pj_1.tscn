@@ -1,7 +1,7 @@
 [gd_scene load_steps=56 format=3 uid="uid://chcs2hrpyd0as"]
 
 [ext_resource type="Script" path="res://scripts/pj/pj_1.gd" id="1_82elq"]
-[ext_resource type="PackedScene" uid="uid://bdw70lq3nvboh" path="res://scenes/attack/projectile_1.tscn" id="2_5312o"]
+[ext_resource type="PackedScene" uid="uid://bdw70lq3nvboh" path="res://scenes/attack/attack_1.tscn" id="2_5312o"]
 [ext_resource type="Texture2D" uid="uid://dqdvkml5nippr" path="res://assets/characters/adventureguirl/Shoot (1).png" id="3_bx7e0"]
 [ext_resource type="Texture2D" uid="uid://dtqkil8kp1vd7" path="res://assets/characters/adventureguirl/Shoot (2).png" id="4_8r14u"]
 [ext_resource type="Texture2D" uid="uid://bb8p1wtk8k7o4" path="res://assets/characters/adventureguirl/Shoot (3).png" id="5_pu1ui"]
